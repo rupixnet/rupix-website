@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo unirte a la testnet — Rupix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0813; --bg-card:#151022; --text:#ecebf4; --muted:#a89fbd;
+    --violet:#b794f6; --gold:#e8c766; --green:#7dd88f; --line:#2a2138;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
+       font-size:16px;line-height:1.65;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:48px 24px 80px}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{margin-bottom:32px}
+  .top a{color:var(--muted);font-size:14px}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:38px;color:var(--gold);
+     margin:8px 0 6px;line-height:1.15}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:28px}
+  .note{background:var(--bg-card);border-left:3px solid var(--violet);
+        padding:14px 18px;border-radius:8px;margin:22px 0;color:var(--text);font-size:15px}
+  h2{font-family:'Space Grotesk',sans-serif;font-size:22px;color:var(--violet);
+     margin:38px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  code,pre{font-family:'JetBrains Mono',monospace}
+  pre{background:#0a0610;border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;overflow-x:auto;font-size:14px;color:var(--green)}
+  code{background:#0a0610;padding:2px 6px;border-radius:4px;font-size:14px;color:var(--gold)}
+  pre code{background:none;padding:0;color:var(--green)}
+  ul{padding-left:22px}
+  li{margin:6px 0}
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+        color:var(--muted);font-size:14px;text-align:center}
+  .foot .lema{color:var(--violet);font-style:italic;margin:8px 0}
+  strong{color:var(--text)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="/">← Volver a rupix.network</a></div>
+  <h1>Cómo unirte a la testnet de Rupix</h1>
+  <div class="sub">Conecta tu nodo a la red de prueba. No necesitas ser experto — sigue los pasos.</div>
+
+  <div class="note">
+    <strong>Rupix testnet</strong> es una red de PRUEBA. Las monedas (RUPIX) de testnet
+    NO tienen valor real. Es para probar, aprender y ayudar a fortalecer la red antes
+    de mainnet. ¡Gracias por sumarte!
+  </div>
+
+  <h2>Paso 1 — Descarga Rupix</h2>
+  <p>Ve a las descargas oficiales:
+     <a href="https://github.com/rupixnet/rupixd/releases">github.com/rupixnet/rupixd/releases</a></p>
+  <p>Descarga el archivo de tu sistema:</p>
+  <ul>
+    <li><strong>Windows:</strong> <code>rupix-v0.4.0-win64.zip</code></li>
+    <li><strong>Mac:</strong> <code>rupix-v0.4.0-osx.zip</code></li>
+    <li><strong>Linux:</strong> <code>rupix-v0.4.0-linux.zip</code></li>
+  </ul>
+  <p>Descomprime el archivo. Dentro hay 4 programas: <code>rupixd</code> (el nodo),
+     <code>rupixctl</code> (control), <code>rupixwallet</code> (billetera),
+     <code>rupixminer</code> (minero).</p>
+
+  <h2>Paso 2 — Arranca tu nodo y conéctate</h2>
+  <p>Abre una terminal en la carpeta donde descomprimiste Rupix, y corre:</p>
+  <p><strong>Linux / Mac:</strong></p>
+  <pre><code>./rupixd --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <p><strong>Windows:</strong></p>
+  <pre><code>rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <p>Tu nodo se conectará al nodo semilla y empezará a <strong>sincronizar</strong>.
+     Verás muchos mensajes — es normal. Cuando alcance el bloque más reciente, ¡ya estás en la red! 🎉</p>
+
+  <h2>Paso 3 — Verifica que estás conectado</h2>
+  <p>En OTRA terminal (deja el nodo corriendo), corre:</p>
+  <pre><code>./rupixctl --testnet GetBlockDagInfo</code></pre>
+  <p>Deberías ver <code>networkName: "rupix-testnet"</code> y <code>blockCount</code> subiendo.
+     Compáralo con el <a href="https://explorer.rupix.network">explorador oficial</a>.
+     Cuando se acerquen, estás al día.</p>
+
+  <h2>Paso 4 (opcional) — Mina Rupix</h2>
+  <div class="note">
+    <strong>Sobre el minado:</strong> hoy Rupix usa el algoritmo heredado de Kaspa.
+    Puedes minar desde tu CPU y, como en testnet no hay máquinas industriales compitiendo,
+    tu CPU sí puede ganar bloques — aunque irá <strong>lento</strong>. Es normal en testnet.
+    Lo importante ahora es correr tu <strong>nodo</strong> (pasos 2-3); minar es un extra.
+    Antes de mainnet, Rupix cambiará a un algoritmo pensado para que cualquiera mine de
+    forma más eficiente. ¡Minar lento también suma!
+  </div>
+  <p>Crea una dirección:</p>
+  <pre><code>./rupixwallet --testnet create
+./rupixwallet --testnet start-daemon
+./rupixwallet --testnet new-address</code></pre>
+  <p>Copia tu dirección (empieza con <code>rupixtest:...</code>) y arranca el minero:</p>
+  <pre><code>./rupixminer --testnet --miningaddr=TU_DIRECCION_AQUI</code></pre>
+
+  <h2>¿Problemas?</h2>
+  <ul>
+    <li><strong>No conecta:</strong> revisa tu internet y la dirección del peer (<code>178.104.69.148:17211</code>).</li>
+    <li><strong>"address already in use":</strong> ya tienes un nodo corriendo; ciérralo antes.</li>
+    <li>Escríbenos y lo resolvemos juntos.</li>
+  </ul>
+
+  <div class="foot">
+    <div class="lema">No confíes. Verifica — desde el génesis.</div>
+    <a href="https://rupix.network">rupix.network</a> ·
+    <a href="https://github.com/rupixnet/rupixd">github</a> ·
+    <a href="https://explorer.rupix.network">explorer</a>
+  </div>
+</div>
+</body>
+</html>
