@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cómo forjar tu primera gema — Rupix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0813; --bg-card:#151022; --text:#ecebf4; --muted:#a89fbd;
+    --violet:#b794f6; --gold:#e8c766; --green:#7dd88f; --line:#2a2138;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
+       font-size:16px;line-height:1.65;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:48px 24px 80px}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{margin-bottom:32px}
+  .top a{color:var(--muted);font-size:14px}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:38px;color:var(--gold);
+     margin:8px 0 6px;line-height:1.15}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:28px}
+  .note{background:var(--bg-card);border-left:3px solid var(--violet);
+        padding:14px 18px;border-radius:8px;margin:22px 0;color:var(--text);font-size:15px}
+  h2{font-family:'Space Grotesk',sans-serif;font-size:22px;color:var(--violet);
+     margin:38px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  code,pre{font-family:'JetBrains Mono',monospace}
+  pre{background:#0a0610;border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;overflow-x:auto;font-size:13px;color:var(--green)}
+  code{background:#0a0610;padding:2px 6px;border-radius:4px;font-size:14px;color:var(--gold)}
+  pre code{background:none;padding:0;color:var(--green)}
+  ul{padding-left:22px}
+  li{margin:6px 0}
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+        color:var(--muted);font-size:14px;text-align:center}
+  .foot .lema{color:var(--violet);font-style:italic;margin:8px 0}
+  strong{color:var(--text)}
+  .diamante{color:#9ad8ff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="/">← Volver a rupix.network</a> &nbsp;·&nbsp; <a href="/guia.html">Guía de conexión</a></div>
+  <h1>💎 Cómo forjar tu primera gema</h1>
+  <div class="sub">Crea tu primer Diamante quemando Gold. La esencia de Rupix: destruir para crear algo más escaso.</div>
+
+  <div class="note">
+    <strong>Requisito:</strong> necesitas tener <strong>Gold</strong> (RUPIX) en tu wallet.
+    Consíguelo minando (ver la <a href="/guia.html">guía de conexión y minado</a>) o pídele
+    a alguien que te mande. Para forjar 1 Diamante necesitas <strong>al menos ~10.5 RUPIX</strong>
+    (10 se queman + un poco para la comisión).
+  </div>
+
+  <h2>Paso 1 — Wallet y daemon corriendo</h2>
+  <p>Si aún no tienes wallet, créala (una sola vez):</p>
+  <pre><code>./rupixwallet --testnet create</code></pre>
+  <p>Arranca el daemon (déjalo en una ventana):</p>
+  <pre><code>./rupixwallet --testnet start-daemon</code></pre>
+
+  <h2>Paso 2 — Revisa tu Gold</h2>
+  <pre><code>./rupixwallet --testnet balance</code></pre>
+  <p>Necesitas al menos ~10.5 RUPIX para forjar un Diamante.</p>
+
+  <h2>Paso 3 — Crea una dirección para tu gema</h2>
+  <pre><code>./rupixwallet --testnet new-address</code></pre>
+  <p>Copia la dirección que empieza con <code>rupixtest:...</code></p>
+
+  <h2>Paso 4 — ¡Forja tu <span class="diamante">Diamante</span>!</h2>
+  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=TU_DIRECCION --password=TU_CLAVE</code></pre>
+  <ul>
+    <li><code>--level=1</code> → Diamante (primer nivel)</li>
+    <li><code>--gem-address=</code> → dónde nace la gema (paso 3)</li>
+    <li><code>--password=</code> → la contraseña de tu wallet</li>
+  </ul>
+  <p>Esto <strong>quema 10 Gold para siempre</strong> y crea <strong>1 Diamante</strong>.
+     La quema queda grabada en la blockchain, visible para todos, irreversible.</p>
+
+  <div class="note">
+    <strong>Los niveles:</strong><br>
+    <code>--level=1</code> Diamante (quema 10 Gold) ·
+    <code>--level=2</code> Platino (10 Diamantes) ·
+    <code>--level=3</code> Rodio (10 Platinos) ·
+    <code>--level=4</code> Kings (10 Rodios)
+  </div>
+
+  <h2>Paso 5 — Mira tu gema</h2>
+  <pre><code>./rupixwallet --testnet gems</code></pre>
+  <p>¡Ahí está tu Diamante! Eres de los primeros en forjar una gema en Rupix. 💎</p>
+
+  <h2>¿Qué acabas de hacer?</h2>
+  <p>Creaste una <strong>prueba criptográfica de que destruiste valor real</strong>.
+     Tu Diamante demuestra que quemaste 10 Gold, para siempre. No es una imagen ni un
+     número inventado: es escasez verificable, grabada en la cadena. Solo 2,100,000
+     Diamantes existirán jamás. Y solo 2,100 Kings, en toda la historia de Rupix.</p>
+
+  <div class="foot">
+    <div class="lema">El dinero que solo se consume. No confíes. Verifica — desde el génesis.</div>
+    <a href="https://rupix.network">rupix.network</a> ·
+    <a href="https://github.com/rupixnet/rupixd">github</a> ·
+    <a href="https://explorer.rupix.network">explorer</a>
+  </div>
+</div>
+</body>
+</html>
