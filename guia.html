@@ -51,6 +51,13 @@
     de mainnet. ¡Gracias por sumarte!
   </div>
 
+  <div class="note" style="border-left-color:var(--gold)">
+    <strong>⚠️ Windows vs Linux/Mac:</strong> los comandos usan <code>./</code> (Linux/Mac).
+    En <strong>Windows PowerShell</strong>, usa <code>.\</code> en vez de <code>./</code> —
+    por ejemplo: <code>.\rupixd.exe</code>. Sin el <code>./</code> o <code>.\</code>, el sistema
+    no encuentra el programa. (¡Gracias a Coco por el aviso! 🙌)
+  </div>
+
   <h2>Paso 1 — Descarga Rupix</h2>
   <p>Ve a las descargas oficiales:
      <a href="https://github.com/rupixnet/rupixd/releases">github.com/rupixnet/rupixd/releases</a></p>
@@ -69,7 +76,7 @@
   <p><strong>Linux / Mac:</strong></p>
   <pre><code>./rupixd --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
   <p><strong>Windows:</strong></p>
-  <pre><code>rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <pre><code>.\rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
   <p>Tu nodo se conectará al nodo semilla y empezará a <strong>sincronizar</strong>.
      Verás muchos mensajes — es normal. Cuando alcance el bloque más reciente, ¡ya estás en la red! 🎉</p>
 
