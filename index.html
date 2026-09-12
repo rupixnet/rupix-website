@@ -367,8 +367,8 @@
         <span class="en">An L1 on a BlockDAG, with its own economics</span>
       </h2>
       <p>
-        <span class="es">Rupix es una blockchain Layer&nbsp;1 con consenso Proof&nbsp;of&nbsp;Work sobre un BlockDAG — no una cadena lineal. Está construida sobre la arquitectura GHOSTDAG de Kaspa, publicada en código abierto bajo licencia ISC. El motor de consenso es de ellos y no lo tocamos. Lo nuestro es la economía encima:</span>
-        <span class="en">Rupix is a Layer&nbsp;1 blockchain with Proof&nbsp;of&nbsp;Work consensus on a BlockDAG — not a linear chain. It is built on Kaspa's GHOSTDAG architecture, published as open source under the ISC license. The consensus engine is theirs and we don't touch it. Ours is the economy on top:</span>
+        <span class="es">Rupix es una blockchain Layer&nbsp;1 con consenso Proof&nbsp;of&nbsp;Work sobre un BlockDAG — no una cadena lineal. Está construida sobre la arquitectura GHOSTDAG de Kaspa, publicada en código abierto bajo licencia ISC. Partimos de su motor de consenso GHOSTDAG; encima construimos nuestra economía y le añadimos verificación al propio consenso: el conteo de gemas se sella en el hash de cada bloque, se valida y persiste. Lo nuestro:</span>
+        <span class="en">Rupix is a Layer&nbsp;1 blockchain with Proof&nbsp;of&nbsp;Work consensus on a BlockDAG — not a linear chain. It is built on Kaspa's GHOSTDAG architecture, published as open source under the ISC license. We start from their GHOSTDAG consensus engine; on top we build our economy and add verification to the consensus itself: the gem count is sealed in each block's hash, validated and persisted. Ours:</span>
       </p>
       <ul class="list">
         <li>
@@ -616,7 +616,7 @@
             <li><span class="es">✓ Genesis con subsidy cero — premine cero, byte por byte</span><span class="en">✓ Genesis with zero subsidy — zero premine, byte by byte</span></li>
             <li><span class="es">✓ Sistema de 5 niveles con quema 10:1, en consenso</span><span class="en">✓ 5-level system with 10:1 burning, in consensus</span></li>
             <li><span class="es">✓ Quema por transacción — en el consenso, verificable</span><span class="en">✓ Per-transaction burn — in consensus, verifiable</span></li>
-            <li><span class="es">✓ <b>Verificación total del conteo de gemas</b> — el conteo se sella en cada bloque (protegido por el minado). Un conteo falso se rechaza. Ni al creador le crees: verifícalo</span><span class="en">✓ <b>Total gem-count verification</b> — the count is sealed in every block (protected by mining). A false count is rejected. Don't trust the creator: verify it</span></li>
+            <li><span class="es">✓ <b>Verificación total del conteo de gemas</b> — el conteo se sella en cada bloque (protegido por el minado). Un conteo falso no cuadra con el sello y se rechaza — probado en testnet desde septiembre 2026. Ni al creador le crees: verifícalo</span><span class="en">✓ <b>Total gem-count verification</b> — the count is sealed in every block (protected by mining). A false count doesn't match the seal and is rejected — tested on testnet since September 2026. Don't trust the creator: verify it</span></li>
             <li><span class="es">✓ <b>Forja de gemas de punta a punta</b> — minar Gold, quemarlo y forjar una gema (Diamante) funciona completo. El conteo se sella, valida y persiste. La escalera vive</span><span class="en">✓ <b>End-to-end gem forging</b> — mining Gold, burning it and forging a gem (Diamond) works fully. The count is sealed, validated and persisted. The ladder is alive</span></li>
             <li><span class="es">✓ Testnet pública viva 24/7 + explorador público en vivo</span><span class="en">✓ Public testnet live 24/7 + public explorer live</span></li>
             <li><span class="es">✓ Desbloqueo de niveles por halving — en el consenso</span><span class="en">✓ Level unlocks by halving — in consensus</span></li>
