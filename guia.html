@@ -113,6 +113,14 @@
   <pre><code>./rupixwallet --testnet create
 ./rupixwallet --testnet start-daemon
 ./rupixwallet --testnet new-address</code></pre>
+  <div class="note">
+    <strong>Nota sobre el archivo de llaves:</strong> si arrancas el daemon con
+    <code>--keys-file=RUTA</code>, el comando <code>send</code> también debe llevar el mismo
+    <code>--keys-file=RUTA</code> (firma localmente con esas llaves). Los demás comandos
+    (<code>new-address</code>, <code>balance</code>, <code>gems</code>, <code>forge</code>)
+    NO lo llevan: consultan al daemon. Si no usas <code>--keys-file</code> en ningún lado,
+    todo usa el archivo por defecto y no hay que preocuparse.
+  </div>
   <p>Copia tu dirección (empieza con <code>rupixtest:...</code>) y arranca el minero:</p>
   <pre><code>./rupixminer --testnet --miningaddr=TU_DIRECCION_AQUI</code></pre>
 
