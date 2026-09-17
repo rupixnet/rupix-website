@@ -45,6 +45,18 @@
   <h1>Cómo unirte a la testnet de Rupix</h1>
   <div class="sub">Conecta tu nodo a la red de prueba. No necesitas ser experto — sigue los pasos.</div>
 
+  <div class="note" style="border-left-color:var(--gold)">
+    <strong>¿Por qué correr tu nodo?</strong><br>
+    Un nodo es tu computadora guardando una copia viva de Rupix y comunicándose con las demás.
+    Cada nodo prendido verifica que nadie mienta, que las reglas se cumplan y que la red siga
+    en pie. El nodo no es un detalle: es lo que hace que Rupix exista de verdad.<br><br>
+    No necesitas dejarlo prendido las 24 horas. Cada vez que uses tu computadora, prende tu
+    nodo — que se te vuelva un hábito: prendes la compu, prendes tu nodo. Mientras más nodos
+    activos, más fuerte y más difícil de tumbar se vuelve la red.<br><br>
+    Si crees en este proyecto, sostenlo corriendo tu nodo. Un día más prendido es un pilar
+    más de pie.
+  </div>
+
   <div class="note">
     <strong>Rupix testnet</strong> es una red de PRUEBA. Las monedas (RUPIX) de testnet
     NO tienen valor real. Es para probar, aprender y ayudar a fortalecer la red antes
@@ -63,9 +75,9 @@
      <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a> (siempre la última versión — no uses versiones anteriores)</p>
   <p>Descarga el archivo de tu sistema:</p>
   <ul>
-    <li><strong>Windows:</strong> <code>rupix-v0.4.5-win64.zip</code></li>
-    <li><strong>Mac:</strong> <code>rupix-v0.4.5-osx.zip</code></li>
-    <li><strong>Linux:</strong> <code>rupix-v0.4.5-linux.zip</code></li>
+    <li><strong>Windows:</strong> <code>rupix-v0.5.0-win64.zip</code></li>
+    <li><strong>Mac:</strong> <code>rupix-v0.5.0-osx.zip</code></li>
+    <li><strong>Linux:</strong> <code>rupix-v0.5.0-linux.zip</code></li>
   </ul>
   <p>Descomprime el archivo. Dentro hay 4 programas: <code>rupixd</code> (el nodo),
      <code>rupixctl</code> (control), <code>rupixwallet</code> (billetera),
@@ -89,12 +101,13 @@
 
   <h2>Paso 4 (opcional) — Mina Rupix</h2>
   <div class="note">
-    <strong>Sobre el minado:</strong> hoy Rupix usa el algoritmo heredado de Kaspa.
-    Puedes minar desde tu CPU y, como en testnet no hay máquinas industriales compitiendo,
-    tu CPU sí puede ganar bloques — aunque irá <strong>lento</strong>. Es normal en testnet.
-    Lo importante ahora es correr tu <strong>nodo</strong> (pasos 2-3); minar es un extra.
-    Antes de mainnet, Rupix cambiará a un algoritmo pensado para que cualquiera mine de
-    forma más eficiente. ¡Minar lento también suma!
+    <strong>Sobre el minado:</strong> Rupix usa <strong>RupixHeavyHash</strong>, un algoritmo
+    propio construido sobre el motor de Kaspa (kHeavyHash) con nuestra propia semilla.
+    Puedes minar desde tu CPU o GPU, y en testnet tu computadora puede ganar bloques.
+    Lo importante ahora es correr tu <strong>nodo</strong> (pasos 2-3); minar es un extra
+    que también suma a la red.<br><br>
+    RupixHeavyHash impide que las máquinas industriales fabricadas para Kaspa minen Rupix
+    — un arranque justo para que todos empiecen parejos.
   </div>
   <p>Crea una dirección:</p>
   <pre><code>./rupixwallet --testnet create
