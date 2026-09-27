@@ -84,6 +84,7 @@
   <p>Copia la dirección que empieza con <code>rupixtest:...</code></p>
 
   <h2>Paso 4 — ¡Forja tu <span class="diamante">Diamante</span>!</h2>
+  <p><strong>Antes de forjar:</strong> cada nivel se abre en su halving. En la testnet: Diamante en el DAA 100,000, Platino en 200,000, Rodio en 300,000 y Kings en 400,000. Antes de eso la red rechaza la forja. Revisa el DAA con <code>./rupixctl --testnet GetBlockDagInfo</code> (campo <code>virtualDaaScore</code>). <code>--level</code>: 1 = Diamante, 2 = Platino, 3 = Rodio, 4 = Kings.</p>
   <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=TU_DIRECCION --password=TU_CLAVE</code></pre>
   <ul>
     <li><code>--level=1</code> → Diamante (primer nivel)</li>
