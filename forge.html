@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to forge your first gem — Rupix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0813; --bg-card:#151022; --text:#ecebf4; --muted:#a89fbd;
+    --violet:#b794f6; --gold:#e8c766; --green:#7dd88f; --line:#2a2138;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
+       font-size:16px;line-height:1.65;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:48px 24px 80px}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{margin-bottom:32px}
+  .top a{color:var(--muted);font-size:14px}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:38px;color:var(--gold);
+     margin:8px 0 6px;line-height:1.15}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:28px}
+  .note{background:var(--bg-card);border-left:3px solid var(--violet);
+        padding:14px 18px;border-radius:8px;margin:22px 0;color:var(--text);font-size:15px}
+  h2{font-family:'Space Grotesk',sans-serif;font-size:22px;color:var(--violet);
+     margin:38px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  code,pre{font-family:'JetBrains Mono',monospace}
+  pre{background:#0a0610;border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;overflow-x:auto;font-size:13px;color:var(--green)}
+  code{background:#0a0610;padding:2px 6px;border-radius:4px;font-size:14px;color:var(--gold)}
+  pre code{background:none;padding:0;color:var(--green)}
+  ul{padding-left:22px}
+  li{margin:6px 0}
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+        color:var(--muted);font-size:14px;text-align:center}
+  .foot .lema{color:var(--violet);font-style:italic;margin:8px 0}
+  strong{color:var(--text)}
+  .diamante{color:#9ad8ff}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="/">← Back to rupix.network</a> &nbsp;·&nbsp; <a href="https://github.com/rupixnet/rupixd#how-to-mine-rupix">How to mine</a> &nbsp;·&nbsp; <a href="/forja.html">Español</a></div>
+  <h1>💎 How to forge your first gem</h1>
+  <div class="sub">Create your first Diamond by burning Gold. The essence of Rupix: destroy to create something scarcer.</div>
+
+  <div class="note">
+    <strong>Requirement:</strong> you need <strong>Gold</strong> (RUPIX) in your wallet.
+    Get it by mining (see <a href="https://github.com/rupixnet/rupixd#how-to-mine-rupix">how to mine Rupix</a>) or ask
+    someone to send you some. To forge 1 Diamond you need <strong>at least ~10.5 RUPIX</strong>
+    (10 are burned, plus a little for the fee).
+  </div>
+
+  <div class="note" style="border-left-color:var(--gold)">
+    <strong>🔥 Every transaction burns a little Gold, on purpose:</strong>
+    moving Gold, transferring a gem or forging burns a tiny fraction of Gold
+    (about a ten-thousandth of a RUPIX, almost nothing). Why? It makes Rupix
+    <strong>scarcer with use</strong>: the more the network is used, the rarer the remaining Gold.
+    The burn also <strong>protects the network from spam</strong> (filling it with junk gets expensive).
+  </div>
+
+  <div class="note" style="border-left-color:var(--gold)">
+    <strong>⚠️ Windows vs Linux/Mac:</strong> the commands use <code>./</code> (Linux/Mac).
+    In <strong>Windows PowerShell</strong>, use <code>.\</code>, for example:
+    <code>.\rupixwallet.exe</code>. (Thanks to JC for the tip! 🙌)
+  </div>
+
+  <h2>Step 1 — Wallet and daemon running</h2>
+  <p>If you don't have a wallet yet, create one (only once):</p>
+  <pre><code>./rupixwallet --testnet create</code></pre>
+  <p>Start the daemon (leave it running in its own window):</p>
+  <pre><code>./rupixwallet --testnet start-daemon</code></pre>
+
+  <h2>Step 2 — Check your Gold</h2>
+  <pre><code>./rupixwallet --testnet balance</code></pre>
+  <p>You need at least ~10.5 RUPIX to forge a Diamond.</p>
+
+  <h2>Step 3 — Create an address for your gem</h2>
+  <pre><code>./rupixwallet --testnet new-address</code></pre>
+  <p>Copy the address that starts with <code>rupixtest:...</code></p>
+
+  <h2>Step 4 — Forge your <span class="diamante">Diamond</span>!</h2>
+  <p><strong>Before forging:</strong> each level opens at its halving. On testnet: Diamond at DAA 100,000, Platinum at 200,000, Rhodium at 300,000 and Kings at 400,000. Before that, the network rejects the forge. Check the DAA with <code>./rupixctl --testnet GetBlockDagInfo</code> (<code>virtualDaaScore</code> field).</p>
+  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=YOUR_ADDRESS --password=YOUR_PASSWORD</code></pre>
+  <ul>
+    <li><code>--level=1</code> → Diamond (first gem level)</li>
+    <li><code>--gem-address=</code> → where the gem is born (step 3)</li>
+    <li><code>--password=</code> → your wallet password</li>
+  </ul>
+  <p>This <strong>burns 10 Gold forever</strong> and creates <strong>1 Diamond</strong>.
+     The burn is recorded on the blockchain, visible to everyone, irreversible.</p>
+
+  <div class="note">
+    <strong>The levels:</strong><br>
+    <code>--level=1</code> Diamond (burns 10 Gold) ·
+    <code>--level=2</code> Platinum (10 Diamonds) ·
+    <code>--level=3</code> Rhodium (10 Platinums) ·
+    <code>--level=4</code> Kings (10 Rhodiums)
+  </div>
+
+  <h2>Step 5 — See your gem</h2>
+  <pre><code>./rupixwallet --testnet gems</code></pre>
+  <p>There's your Diamond! You're one of the first to forge a gem on Rupix. 💎</p>
+
+  <h2>What did you just do?</h2>
+  <p>You created a <strong>cryptographic proof that you burned real Gold</strong>.
+     Your Diamond proves you burned 10 Gold, forever. It's not an image or a made-up
+     number: it's verifiable scarcity, recorded on-chain. Only 2,100,000 Diamonds
+     will ever exist. And only 2,100 Kings, in all of Rupix's history.</p>
+
+  <div class="foot">
+    <div class="lema">Money that only gets consumed. Don't trust. Verify — from genesis.</div>
+    <a href="https://rupix.network">rupix.network</a> ·
+    <a href="https://github.com/rupixnet/rupixd">github</a> ·
+    <a href="https://explorer.rupix.network">explorer</a>
+  </div>
+</div>
+</body>
+</html>
