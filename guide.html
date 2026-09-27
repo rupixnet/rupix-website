@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to join the testnet — Rupix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0813; --bg-card:#151022; --text:#ecebf4; --muted:#a89fbd;
+    --violet:#b794f6; --gold:#e8c766; --green:#7dd88f; --line:#2a2138;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;
+       font-size:16px;line-height:1.65;margin:0;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:820px;margin:0 auto;padding:48px 24px 80px}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .top{margin-bottom:32px}
+  .top a{color:var(--muted);font-size:14px}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:38px;color:var(--gold);
+     margin:8px 0 6px;line-height:1.15}
+  .sub{color:var(--muted);font-size:17px;margin-bottom:28px}
+  .note{background:var(--bg-card);border-left:3px solid var(--violet);
+        padding:14px 18px;border-radius:8px;margin:22px 0;color:var(--text);font-size:15px}
+  h2{font-family:'Space Grotesk',sans-serif;font-size:22px;color:var(--violet);
+     margin:38px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  code,pre{font-family:'JetBrains Mono',monospace}
+  pre{background:#0a0610;border:1px solid var(--line);border-radius:8px;
+      padding:14px 16px;overflow-x:auto;font-size:14px;color:var(--green)}
+  code{background:#0a0610;padding:2px 6px;border-radius:4px;font-size:14px;color:var(--gold)}
+  pre code{background:none;padding:0;color:var(--green)}
+  ul{padding-left:22px}
+  li{margin:6px 0}
+  .foot{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);
+        color:var(--muted);font-size:14px;text-align:center}
+  .foot .lema{color:var(--violet);font-style:italic;margin:8px 0}
+  strong{color:var(--text)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><a href="/">← Back to rupix.network</a> &nbsp;·&nbsp; <a href="/forge.html">Forge guide</a> &nbsp;·&nbsp; <a href="/guia.html">Español</a></div>
+  <h1>How to join the Rupix testnet</h1>
+  <div class="sub">Connect your node to the test network. You don't need to be an expert — just follow the steps.</div>
+
+  <div class="note" style="border-left-color:var(--gold)">
+    <strong>Why run your node?</strong><br>
+    A node is your computer keeping a live copy of Rupix and talking to the others.
+    Every running node checks that nobody lies, that the rules are followed and that the
+    network stays up. The node isn't a detail: it's what makes Rupix really exist.<br><br>
+    You don't need to leave it on 24 hours a day. Whenever you use your computer, start your
+    node — make it a habit: turn on the computer, turn on your node. The more active nodes,
+    the stronger and harder to take down the network becomes.<br><br>
+    If you believe in this project, support it by running your node. One more day online is
+    one more pillar standing.
+  </div>
+
+  <div class="note">
+    <strong>Rupix testnet</strong> is a TEST network. Testnet coins (RUPIX) have NO
+    real value. It's for testing, learning and helping strengthen the network before
+    mainnet. Thanks for joining!
+  </div>
+
+  <div class="note" style="border-left-color:var(--gold)">
+    <strong>⚠️ Windows vs Linux/Mac:</strong> the commands use <code>./</code> (Linux/Mac).
+    In <strong>Windows PowerShell</strong>, use <code>.\</code> instead of <code>./</code>,
+    for example: <code>.\rupixd.exe</code>. Without <code>./</code> or <code>.\</code>, the system
+    can't find the program. (Thanks to JC for the tip! 🙌)
+  </div>
+
+  <h2>Step 1 — Download Rupix</h2>
+  <p>Go to the official downloads:
+     <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a> (always the latest version — don't use older ones)</p>
+  <p>Download the file for your system:</p>
+  <ul>
+    <li><strong>Windows:</strong> <code>rupix-v0.6.0-win64.zip</code></li>
+    <li><strong>Mac:</strong> <code>rupix-v0.6.0-osx.zip</code></li>
+    <li><strong>Linux:</strong> <code>rupix-v0.6.0-linux.zip</code></li>
+  </ul>
+  <p>Unzip it. Inside there are 4 programs: <code>rupixd</code> (the node),
+     <code>rupixctl</code> (control), <code>rupixwallet</code> (wallet),
+     <code>rupixminer</code> (miner).</p>
+
+  <h2>Step 2 — Start your node and connect</h2>
+  <p>Open a terminal in the folder where you unzipped Rupix and run:</p>
+  <p><strong>Linux / Mac:</strong></p>
+  <pre><code>./rupixd --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <p><strong>Windows:</strong></p>
+  <pre><code>.\rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <p>Your node will connect to the seed node and start <strong>syncing</strong>.
+     You'll see lots of messages — that's normal. When it catches up with the latest block, you're on the network! 🎉</p>
+
+  <h2>Step 3 — Check that you're connected</h2>
+  <p>In ANOTHER terminal (leave the node running), run:</p>
+  <pre><code>./rupixctl --testnet GetBlockDagInfo</code></pre>
+  <p>You should see <code>networkName: "rupix-testnet"</code> and <code>blockCount</code> going up.
+     Compare it with the <a href="https://explorer.rupix.network">official explorer</a>.
+     When they're close, you're up to date.</p>
+
+  <h2>Step 4 (optional) — Mine Rupix</h2>
+  <div class="note">
+    <strong>About mining:</strong> Rupix uses <strong>RupixHeavyHash</strong>, its own algorithm
+    derived from Kaspa's engine (kHeavyHash; Rupix is a fork of kaspad) with its own seed.
+    You can mine with your CPU or GPU, and on testnet your computer can win blocks.
+    What matters most right now is running your <strong>node</strong> (steps 2-3); mining is an
+    extra that also helps the network.<br><br>
+    RupixHeavyHash stops the industrial machines built for Kaspa from mining Rupix
+    — a fair start so everyone begins on equal footing. Honestly: it's an advantage of months,
+    not an eternal barrier; an FPGA can be reprogrammed.
+  </div>
+  <p>Create your wallet (only once):</p>
+  <pre><code>./rupixwallet --testnet create</code></pre>
+  <p>Start the daemon and leave it running in its own window:</p>
+  <pre><code>./rupixwallet --testnet start-daemon</code></pre>
+  <p>In <strong>another</strong> window, create your address:</p>
+  <pre><code>./rupixwallet --testnet new-address</code></pre>
+  <div class="note">
+    <strong>About the keys file:</strong> if you start the daemon with
+    <code>--keys-file=PATH</code>, the <code>send</code> command must also use the same
+    <code>--keys-file=PATH</code> (it signs locally with those keys). The other commands
+    (<code>new-address</code>, <code>balance</code>, <code>gems</code>, <code>forge</code>)
+    do NOT take it: they ask the daemon. If you don't use <code>--keys-file</code> anywhere,
+    everything uses the default file and there's nothing to worry about.
+  </div>
+  <p>Copy your address (it starts with <code>rupixtest:...</code>) and start the miner:</p>
+  <pre><code>./rupixminer --testnet --miningaddr=YOUR_ADDRESS_HERE</code></pre>
+
+  <h2>Problems?</h2>
+  <ul>
+    <li><strong>Can't connect:</strong> check your internet and the peer address (<code>178.104.69.148:17211</code>).</li>
+    <li><strong>"address already in use":</strong> you already have a node running; close it first.</li>
+    <li>Write to us and we'll sort it out together.</li>
+  </ul>
+
+  <div class="foot">
+    <div class="lema">Don't trust. Verify — from genesis.</div>
+    <a href="https://rupix.network">rupix.network</a> ·
+    <a href="https://github.com/rupixnet/rupixd">github</a> ·
+    <a href="https://explorer.rupix.network">explorer</a>
+  </div>
+</div>
+</body>
+</html>

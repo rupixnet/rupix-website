@@ -41,7 +41,7 @@
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><a href="/">← Volver a rupix.network</a></div>
+  <div class="top"><a href="/">← Volver a rupix.network</a> &nbsp;·&nbsp; <a href="/guide.html">English</a></div>
   <h1>Cómo unirte a la testnet de Rupix</h1>
   <div class="sub">Conecta tu nodo a la red de prueba. No necesitas ser experto — sigue los pasos.</div>
 
@@ -107,12 +107,15 @@
     Lo importante ahora es correr tu <strong>nodo</strong> (pasos 2-3); minar es un extra
     que también suma a la red.<br><br>
     RupixHeavyHash impide que las máquinas industriales fabricadas para Kaspa minen Rupix
-    — un arranque justo para que todos empiecen parejos.
+    — un arranque justo para que todos empiecen parejos. Honesto: es una ventaja de meses,
+    no una barrera eterna; un FPGA puede reprogramarse.
   </div>
-  <p>Crea una dirección:</p>
-  <pre><code>./rupixwallet --testnet create
-./rupixwallet --testnet start-daemon
-./rupixwallet --testnet new-address</code></pre>
+  <p>Crea tu wallet (una sola vez):</p>
+  <pre><code>./rupixwallet --testnet create</code></pre>
+  <p>Arranca el daemon y déjalo corriendo en su propia ventana:</p>
+  <pre><code>./rupixwallet --testnet start-daemon</code></pre>
+  <p>En <strong>otra</strong> ventana, crea tu dirección:</p>
+  <pre><code>./rupixwallet --testnet new-address</code></pre>
   <div class="note">
     <strong>Nota sobre el archivo de llaves:</strong> si arrancas el daemon con
     <code>--keys-file=RUTA</code>, el comando <code>send</code> también debe llevar el mismo
