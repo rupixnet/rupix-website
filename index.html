@@ -73,6 +73,10 @@
   }
   .lang-toggle button.active{background:var(--violet-deep);color:#fff}
 
+  @media (max-width:720px){.rung .bar-track{margin-right:84px}}
+  .hero-links{list-style:none;margin-top:20px;display:grid;gap:8px}
+  .hero-links a{color:var(--gold-hi);font-weight:600;text-decoration:none}
+  .hero-links a:hover{text-decoration:underline}
   /* ===== hero ===== */
   .hero{padding:96px 0 72px;border-bottom:1px solid var(--line)}
   .hero-grid{display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center}
@@ -313,6 +317,11 @@
         <a href="https://explorer.rupix.network" rel="noopener" style="display:inline-block;background:linear-gradient(90deg,#b794f6,#e8c766);color:#1a1206;font-weight:800;font-size:1.05rem;padding:14px 28px;border-radius:12px;text-decoration:none;box-shadow:0 8px 28px rgba(183,148,246,.35)">
           <span class="es">Ver el explorador en vivo →</span><span class="en">See the live explorer →</span>
         </a>
+        <ul class="hero-links">
+          <li><a class="es" href="/guia.html">✓ Guía: cómo conectar tu nodo a la testnet →</a><a class="en" href="/guide.html">✓ Guide: how to connect your node to the testnet →</a></li>
+          <li><a class="es" href="/forja.html">✓ Guía: cómo forjar tu primera gema 💎 →</a><a class="en" href="/forge.html">✓ Guide: how to forge your first gem 💎 →</a></li>
+          <li><a class="es" href="/matematica.html">✓ La matemática de Rupix: emisión, gemas y costos →</a><a class="en" href="/matematica.html">✓ The math of Rupix: issuance, gems and costs →</a></li>
+        </ul>
       </div>
       </div>
       <img class="hero-coin" src="oro.webp" alt="Moneda Rupix Gold" width="480" height="480">
