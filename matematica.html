@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La matemática de Rupix</title>
+<meta name="description" content="Cómo se emite el Gold de Rupix, cómo se abren las gemas y cuánto cuesta mover Rupix. Con números exactos y una calculadora para verificarlo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0813; --bg-soft:#150e1f; --line:#2a2138; --grid:#1f1829;
+    --text:#ece8f4; --muted:#a89fbd; --violet:#b794f6; --violet-deep:#6d28d9;
+    --gold-hi:#e8c766; --gold:#d4af37; --gold-soft:rgba(232,199,102,.12);
+    --diamond:#b9e2f5; --platinum:#c9cdd4; --rhodium:#e39bb6; --kings:#b06ef7;
+    --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .en{display:none}
+  body.lang-en .es{display:none}
+  body.lang-en .en{display:inline}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--line)}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;gap:12px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.1rem;letter-spacing:.04em;color:var(--text);text-decoration:none}
+  .gem{width:18px;height:18px;background:linear-gradient(135deg,var(--gold-hi) 0%,var(--violet-deep) 100%);clip-path:polygon(50% 0,100% 38%,50% 100%,0 38%)}
+  .lang-toggle{display:flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;font-family:var(--mono);font-size:.78rem}
+  .lang-toggle button{background:none;border:none;color:var(--muted);padding:6px 12px;cursor:pointer;font-family:inherit;font-size:inherit}
+  .lang-toggle button.active{background:var(--violet-deep);color:#fff}
+  main{display:grid;gap:64px;padding:48px 0 80px}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;line-height:1.15;text-wrap:balance}
+  h1{font-size:clamp(2rem,5vw,3.2rem);color:var(--gold-hi)}
+  h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+  h3{font-size:1.05rem}
+  p{color:var(--muted);max-width:68ch}
+  p strong,li strong{color:var(--text)}
+  .eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--violet)}
+  section{display:grid;gap:18px}
+  code{font-family:var(--mono);font-size:.88em;background:#0a0610;color:var(--gold-hi);padding:2px 6px;border-radius:4px}
+  a{color:var(--gold-hi)}
+  .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .formula{display:flex;flex-wrap:wrap;gap:12px 32px;border-block:1px solid var(--line);padding-block:18px}
+  .formula div{display:grid;gap:2px}
+  .formula b{font:600 clamp(1.5rem,3.4vw,2.2rem)/1.1 var(--mono);color:var(--gold-hi)}
+  .formula span{font-size:.85rem;color:var(--muted)}
+  .panel{background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;padding:18px 18px 12px}
+  .chart-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;align-items:baseline;margin-bottom:6px}
+  .chart-head small{color:var(--muted);font-size:.8rem}
+  .chart-box{position:relative;width:100%}
+  .chart-box svg{display:block;width:100%;height:auto;overflow:visible}
+  .axis text,.tick{fill:var(--muted);font:11px var(--mono)}
+  .gridline{stroke:var(--grid)}
+  .baseline{stroke:var(--line)}
+  .tip{position:absolute;pointer-events:none;background:#1b1426;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.8rem;line-height:1.45;min-width:190px;box-shadow:0 8px 24px rgba(0,0,0,.4);z-index:2}
+  .tip b{font-family:var(--mono);font-weight:600;display:block}
+  .tip .k{color:var(--muted)}
+  .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--bg-soft)}
+  table{border-collapse:collapse;width:100%;font-size:.92rem}
+  th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font:600 .72rem/1.3 var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--muted);background:#110b1a}
+  tr:last-child td{border-bottom:0}
+  .simple td:first-child{color:var(--text);font-weight:600;width:34%}
+  .simple td:nth-child(2){color:var(--text)}
+  .simple td:nth-child(3){color:var(--muted);font-size:.88rem}
+  .eras td,.eras th{text-align:right;white-space:nowrap;font-family:var(--mono);font-variant-numeric:tabular-nums}
+  .eras td:first-child,.eras th:first-child{text-align:left}
+  .eras tr.hl td{background:var(--gold-soft)}
+  details summary{cursor:pointer;color:var(--text);font-weight:500}
+  details[open] summary{margin-bottom:10px}
+  .ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+  .rung{background:var(--bg-soft);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:14px;display:grid;gap:10px;align-content:start}
+  .rung .name{display:flex;align-items:center;gap:8px;font:700 1.05rem/1.1 'Space Grotesk',sans-serif;color:var(--c)}
+  .dot{width:11px;height:11px;border-radius:50%;background:var(--c);flex:none;display:inline-block}
+  .rung dl{display:grid;gap:7px}
+  .rung dt{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .rung dd{font:500 .92rem/1.3 var(--mono);font-variant-numeric:tabular-nums}
+  .rung dd.sub{color:var(--muted);font-size:.78rem}
+  .r0{--c:var(--gold-hi)}.r1{--c:var(--diamond)}.r2{--c:var(--platinum)}.r3{--c:var(--rhodium)}.r4{--c:var(--kings)}
+  @media (max-width:860px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}.rung.r0{grid-column:1/-1}}
+  @media (max-width:440px){.ladder{grid-template-columns:1fr}}
+  .note{border-left:3px solid var(--violet);background:var(--bg-soft);border-radius:0 10px 10px 0;padding:14px 18px;display:grid;gap:8px}
+  .chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font:500 .9rem var(--mono)}
+  .pill{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:4px 10px;background:#110b1a}
+  .arrow{color:var(--muted)}
+  .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+  @media (max-width:760px){.two{grid-template-columns:1fr}}
+  .calc{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:18px}
+  @media (max-width:760px){.calc{grid-template-columns:1fr}}
+  .controls{display:grid;gap:14px;align-content:start}
+  label{font-size:.85rem;color:var(--muted);display:grid;gap:6px}
+  input[type=text]{font:500 1.1rem var(--mono);padding:10px 12px;border-radius:8px;border:1px solid var(--line);background:#0a0610;color:var(--text);width:100%}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;width:max-content}
+  .seg button{font:500 .85rem 'Inter',sans-serif;border:0;background:none;color:var(--muted);padding:8px 14px;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--violet-deep);color:#fff}
+  .presets{display:flex;flex-wrap:wrap;gap:6px}
+  .presets button{font:500 .78rem var(--mono);border:1px solid var(--line);background:#110b1a;color:var(--muted);border-radius:999px;padding:4px 10px;cursor:pointer}
+  button:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
+  .out{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .out > div{background:var(--bg-soft);padding:12px 14px;display:grid;gap:2px}
+  .out span.k{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .out b{font:600 1rem var(--mono);font-variant-numeric:tabular-nums}
+  .out .wide{grid-column:1/-1}
+  .levels{display:flex;flex-wrap:wrap;gap:6px}
+  .lvl{display:inline-flex;gap:6px;align-items:center;font-size:.8rem;border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+  .lvl.off{opacity:.45}
+  .err{color:#ff8a8a;font-size:.85rem}
+  footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:.85rem}
+  footer .wrap{display:grid;gap:8px}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav" style="padding-inline:0">
+    <a class="brand" href="/"><span class="gem" aria-hidden="true"></span>RUPIX</a>
+    <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+      <button id="btn-es" class="active" onclick="setLang('es')">ES</button>
+      <button id="btn-en" onclick="setLang('en')">EN</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+<section>
+  <div class="eyebrow"><span class="es">La matemática, verificable</span><span class="en">The math, verifiable</span></div>
+  <h1><span class="es">42 millones, cortados a la mitad cada 42 millones de bloques</span><span class="en">42 million, cut in half every 42 million blocks</span></h1>
+  <p><span class="es">Rupix es una moneda digital que no controla nadie. Nadie decide cuánta se crea: lo decide una regla escrita en el código desde el primer bloque. Esta página explica esa regla con números exactos, y abajo puedes calcular tú mismo qué pasa en cualquier bloque.</span><span class="en">Rupix is a digital currency no one controls. No one decides how much is created: a rule written into the code since the first block decides it. This page explains that rule with exact numbers, and below you can calculate for yourself what happens at any block.</span></p>
+  <div class="formula">
+    <div><b>0.5</b><span><span class="es">RUPIX por bloque al inicio</span><span class="en">RUPIX per block at the start</span></span></div>
+    <div><b>1 s</b><span><span class="es">un bloque por segundo</span><span class="en">one block per second</span></span></div>
+    <div><b>42,000,000</b><span><span class="es">bloques entre halvings (~16 meses)</span><span class="en">blocks between halvings (~16 months)</span></span></div>
+    <div><b>10 : 1</b><span><span class="es">se queman 10 para forjar 1</span><span class="en">burn 10 to forge 1</span></span></div>
+  </div>
+</section>
+
+<section id="tabla">
+  <div class="eyebrow"><span class="es">Para quien empieza</span><span class="en">If you're new</span></div>
+  <h2><span class="es">Rupix en una tabla</span><span class="en">Rupix in one table</span></h2>
+  <div class="tbl">
+    <table class="simple">
+      <thead><tr><th><span class="es">Pregunta</span><span class="en">Question</span></th><th><span class="es">Respuesta</span><span class="en">Answer</span></th><th><span class="es">En palabras simples</span><span class="en">In plain words</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="es">¿Cuántos Rupix van a existir?</span><span class="en">How many Rupix will exist?</span></td><td class="num">41,999,994.96</td><td><span class="es">Es el máximo. Nadie puede crear más, ni el creador.</span><span class="en">That's the maximum. No one can create more, not even the creator.</span></td></tr>
+        <tr><td><span class="es">¿De dónde salen?</span><span class="en">Where do they come from?</span></td><td><span class="es">Del minado</span><span class="en">Mining</span></td><td><span class="es">Computadoras que protegen la red reciben Rupix nuevos, un bloque por segundo. No hubo reparto inicial: el primer Rupix se minó en público.</span><span class="en">Computers that secure the network receive new Rupix, one block per second. There was no initial allocation: the first Rupix was mined in public.</span></td></tr>
+        <tr><td><span class="es">¿Cuánto paga cada bloque?</span><span class="en">How much does each block pay?</span></td><td class="num"><span class="es">0.5 al inicio</span><span class="en">0.5 at first</span></td><td><span class="es">Cada ~16 meses la paga baja a la mitad: 0.5, 0.25, 0.125…</span><span class="en">Every ~16 months the reward halves: 0.5, 0.25, 0.125…</span></td></tr>
+        <tr><td><span class="es">¿Cuándo se terminan de crear?</span><span class="en">When does creation end?</span></td><td class="num"><span class="es">~35 años</span><span class="en">~35 years</span></td><td><span class="es">Pero el 93.75% ya existe a los ~5.3 años. Después la emisión es mínima.</span><span class="en">But 93.75% exists by ~5.3 years. After that, issuance is tiny.</span></td></tr>
+        <tr><td><span class="es">¿Qué son las gemas?</span><span class="en">What are gems?</span></td><td><span class="es">Diamante, Platino, Rodio, Kings</span><span class="en">Diamond, Platinum, Rhodium, Kings</span></td><td><span class="es">Piezas más escasas. No se minan: se forjan destruyendo 10 piezas del nivel de abajo.</span><span class="en">Scarcer pieces. They aren't mined: they're forged by destroying 10 pieces of the level below.</span></td></tr>
+        <tr><td><span class="es">¿Cuándo se puede forjar cada gema?</span><span class="en">When can each gem be forged?</span></td><td><span class="es">Una por halving</span><span class="en">One per halving</span></td><td><span class="es">Diamante a los ~1.3 años, Platino ~2.7, Rodio ~4, Kings ~5.3. Antes, la red lo rechaza. Para todos igual.</span><span class="en">Diamond at ~1.3 years, Platinum ~2.7, Rhodium ~4, Kings ~5.3. Before that, the network rejects it. Same for everyone.</span></td></tr>
+        <tr><td><span class="es">¿Cuánto Gold cuesta un King?</span><span class="en">How much Gold does a King cost?</span></td><td class="num">10,000</td><td><span class="es">10 Rodios = 100 Platinos = 1,000 Diamantes = 10,000 Gold, quemados para siempre.</span><span class="en">10 Rhodium = 100 Platinum = 1,000 Diamonds = 10,000 Gold, burned forever.</span></td></tr>
+        <tr><td><span class="es">¿Cuántos Kings pueden existir?</span><span class="en">How many Kings can exist?</span></td><td class="num">2,100</td><td><span class="es">Nunca más. El King 2,101 no puede nacer.</span><span class="en">Never more. King 2,101 cannot be born.</span></td></tr>
+        <tr><td><span class="es">¿Cuánto cuesta mover Rupix?</span><span class="en">How much does moving Rupix cost?</span></td><td class="num">≈ 0.00008</td><td><span class="es">En un envío sencillo: una pequeña quema más la comisión al minero. Mover una gema cuesta unas 0.00021. Detalle abajo.</span><span class="en">For a simple transfer: a small burn plus the miner fee. Moving a gem costs about 0.00021. Details below.</span></td></tr>
+        <tr><td><span class="es">¿Alguien puede cambiar estas reglas?</span><span class="en">Can anyone change these rules?</span></td><td><span class="es">No en secreto</span><span class="en">Not in secret</span></td><td><span class="es">Las reglas viven en cada nodo. Un cambio exige que la gente instale una versión nueva, publicada y revisable. Si no la instalan, no hay cambio.</span><span class="en">The rules live in every node. A change requires people to install a new, published, reviewable version. If they don't install it, nothing changes.</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="emision">
+  <div class="eyebrow"><span class="es">1 · La emisión del Gold</span><span class="en">1 · Gold issuance</span></div>
+  <h2><span class="es">Cada era dura 42 millones de bloques y paga la mitad que la anterior</span><span class="en">Each era lasts 42 million blocks and pays half the previous one</span></h2>
+  <p><span class="es">Durante los primeros 42,000,000 bloques, cada bloque paga 0.5 RUPIX. Luego viene un halving y baja a 0.25; otros 42 millones de bloques después, a 0.125. La primera era crea 21 millones, la mitad de todo; cada era suma la mitad que la anterior, y la suma nunca pasa de 42 millones.</span><span class="en">For the first 42,000,000 blocks, each block pays 0.5 RUPIX. Then a halving cuts it to 0.25; 42 million blocks later, to 0.125. The first era creates 21 million, half of everything; each era adds half of the one before, and the sum never exceeds 42 million.</span></p>
+  <div class="panel">
+    <div class="chart-head"><h3><span class="es">Gold emitido en total, a lo largo del tiempo</span><span class="en">Total Gold issued over time</span></h3><small><span class="es">Pasa el cursor para ver cualquier momento</span><span class="en">Hover to inspect any moment</span></small></div>
+    <div class="chart-box" id="supplyBox"></div>
+  </div>
+  <div class="panel">
+    <div class="chart-head"><h3><span class="es">Gold creado en cada era</span><span class="en">Gold created in each era</span></h3><small><span class="es">Primeras 10 de 26 eras</span><span class="en">First 10 of 26 eras</span></small></div>
+    <div class="chart-box" id="eraBox"></div>
+  </div>
+  <details>
+    <summary><span class="es">Ver las 26 eras completas</span><span class="en">See all 26 eras</span></summary>
+    <div class="tbl"><table class="eras" id="eraTable"><thead></thead><tbody></tbody></table></div>
+  </details>
+</section>
+
+<section id="escalera">
+  <div class="eyebrow"><span class="es">2 · La escalera de gemas</span><span class="en">2 · The gem ladder</span></div>
+  <h2><span class="es">Cada halving abre un nivel nuevo, y subir cuesta 10 del nivel de abajo</span><span class="en">Each halving opens a new level, and climbing costs 10 of the level below</span></h2>
+  <p><span class="es">El Gold se mina. Las gemas se <strong>forjan</strong>, quemando piezas del nivel inferior para siempre. Nadie puede forjar un nivel antes de su halving, ni siquiera quien creó Rupix: la red rechaza la transacción.</span><span class="en">Gold is mined. Gems are <strong>forged</strong>, burning pieces of the level below forever. No one can forge a level before its halving, not even Rupix's creator: the network rejects the transaction.</span></p>
+  <div class="ladder" id="ladder"></div>
+  <div class="note">
+    <h3><span class="es">La cadena exacta</span><span class="en">The exact chain</span></h3>
+    <p><span class="es">Los topes encajan entre sí. Llenar los 2,100 Kings exige exactamente el tope de cada nivel inferior, y todo eso sale de 21 millones de Gold: la mitad de todo el Gold que existirá.</span><span class="en">The caps fit together. Filling all 2,100 Kings takes exactly the cap of every lower level, and all of it comes from 21 million Gold: half of all the Gold that will ever exist.</span></p>
+    <div class="chain" id="chain"></div>
+    <p style="font-size:.9rem"><span class="es">Los topes cuentan gemas <strong>nacidas</strong> en toda la historia. Si una gema se quema para forjar otra, su lugar no vuelve a abrirse.</span><span class="en">Caps count gems <strong>ever born</strong>. If a gem is burned to forge another, its slot never reopens.</span></p>
+  </div>
+</section>
+
+<section id="costo">
+  <div class="eyebrow"><span class="es">3 · Lo que cuesta mover Rupix</span><span class="en">3 · What moving Rupix costs</span></div>
+  <h2><span class="es">Cada movimiento quema un poco de Gold y paga al minero</span><span class="en">Every transfer burns a little Gold and pays the miner</span></h2>
+  <div class="tbl">
+    <table class="simple">
+      <thead><tr><th><span class="es">Parte</span><span class="en">Part</span></th><th><span class="es">Regla</span><span class="en">Rule</span></th><th><span class="es">Envío sencillo hoy</span><span class="en">Simple transfer today</span></th></tr></thead>
+      <tbody>
+        <tr><td><span class="es">Quema mínima que exige la red</span><span class="en">Minimum burn the network requires</span></td><td class="num"><span class="es">1,000 rupias + 10 rupias por byte</span><span class="en">1,000 rupias + 10 rupias per byte</span></td><td class="num">≈ 0.0000435 RUPIX</td></tr>
+        <tr><td><span class="es">Quema que hace la wallet hoy</span><span class="en">Burn the wallet makes today</span></td><td class="num"><span class="es">la misma fórmula con margen: 200 bytes por pieza + 300</span><span class="en">same formula with margin: 200 bytes per piece + 300</span></td><td class="num">0.00006 RUPIX</td></tr>
+        <tr><td><span class="es">Comisión al minero</span><span class="en">Miner fee</span></td><td class="num"><span class="es">mínimo 1 rupia por gramo de masa</span><span class="en">at least 1 rupia per gram of mass</span></td><td class="num">≈ 0.000021 RUPIX</td></tr>
+        <tr><td><span class="es">Total de un envío sencillo</span><span class="en">Total for a simple transfer</span></td><td></td><td class="num">≈ 0.00008 RUPIX</td></tr>
+        <tr><td><span class="es">Mover o forjar una gema</span><span class="en">Moving or forging a gem</span></td><td class="num"><span class="es">la wallet quema 1,000 + 10 × 2,000</span><span class="en">the wallet burns 1,000 + 10 × 2,000</span></td><td class="num">0.00021 RUPIX <span class="es">+ comisión</span><span class="en">+ fee</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:.88rem"><span class="es">Una rupia es 0.00000001 RUPIX. "Envío sencillo" es una transacción con una pieza de entrada y dos salidas (destino y cambio): unos 335 bytes y unos 2,085 gramos de masa, calculados con las fórmulas del código. La red exige una quema mínima; la wallet quema algo más para no quedarse corta, porque la regla es "al menos". La quema no va a nadie: sale de circulación para siempre.</span><span class="en">One rupia is 0.00000001 RUPIX. A "simple transfer" is a transaction with one input piece and two outputs (recipient and change): about 335 bytes and about 2,085 grams of mass, computed with the code's formulas. The network requires a minimum burn; the wallet burns a bit more so it never falls short, because the rule is "at least". The burn goes to no one: it leaves circulation forever.</span></p>
+  <div class="two">
+    <div class="note">
+      <h3><span class="es">¿Puede subir con el tiempo?</span><span class="en">Can it go up over time?</span></h3>
+      <p><span class="es"><strong>La quema, no.</strong> Es un número fijo de rupias escrito en el consenso. No depende del tiempo, del halving ni de nada externo. Cambiarla exigiría una versión nueva del nodo que la gente decida instalar, a la vista de todos.</span><span class="en"><strong>The burn, no.</strong> It's a fixed number of rupias written into consensus. It doesn't depend on time, halvings or anything external. Changing it would require a new node version that people choose to install, in public view.</span></p>
+      <p><span class="es"><strong>La comisión al minero, sí puede.</strong> El mínimo es fijo, pero cuando hay muchas transacciones esperando, quien paga más entra antes. Es un mercado, como en cualquier red.</span><span class="en"><strong>The miner fee, yes it can.</strong> The minimum is fixed, but when many transactions are waiting, those who pay more get in first. It's a market, like on any network.</span></p>
+    </div>
+    <div class="note">
+      <h3><span class="es">Lo que sí cambia el costo: el tamaño</span><span class="en">What does change the cost: size</span></h3>
+      <p><span class="es">Cada pieza de Gold que juntas en un envío agrega unos 118 bytes. Si tu wallet tiene muchas piezas pequeñas (como la de un minero, que cobra 0.25 por bloque), un envío grande junta cientos de piezas y cuesta más: con la wallet de hoy, unas 0.00003 RUPIX por pieza extra.</span><span class="en">Each piece of Gold you combine in a transfer adds about 118 bytes. If your wallet holds many small pieces (like a miner's, paid 0.25 per block), a large transfer combines hundreds of pieces and costs more: with today's wallet, about 0.00003 RUPIX per extra piece.</span></p>
+      <p><span class="es">Mover una gema también paga su quema y su comisión en Gold. Si te quedas sin Gold, tu gema sigue siendo tuya, pero queda quieta hasta que tengas un poco otra vez.</span><span class="en">Moving a gem also pays its burn and fee in Gold. If you run out of Gold, your gem is still yours, but it stays put until you have a little again.</span></p>
+    </div>
+  </div>
+</section>
+
+<section id="calcular">
+  <div class="eyebrow"><span class="es">4 · Verifícalo tú</span><span class="en">4 · Verify it yourself</span></div>
+  <h2><span class="es">¿Qué pasa en el bloque que elijas?</span><span class="en">What happens at the block you choose?</span></h2>
+  <p><span class="es">Escribe un número de bloque (el DAA score que da <code>rupixctl GetBlockDagInfo</code>). La testnet usa la misma regla con halvings cada 100,000 bloques, para probar toda la escalera en días.</span><span class="en">Enter a block number (the DAA score from <code>rupixctl GetBlockDagInfo</code>). The testnet uses the same rule with halvings every 100,000 blocks, to test the whole ladder in days.</span></p>
+  <div class="calc panel">
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Red / Network">
+        <button type="button" id="netMain" aria-pressed="true">Mainnet</button>
+        <button type="button" id="netTest" aria-pressed="false">Testnet</button>
+      </div>
+      <label for="blk"><span class="es">Número de bloque</span><span class="en">Block number</span>
+        <input type="text" id="blk" inputmode="numeric" autocomplete="off" value="42000000">
+      </label>
+      <div class="presets" id="presets"></div>
+      <div class="err" id="err" hidden></div>
+    </div>
+    <div class="out" id="out"></div>
+  </div>
+</section>
+
+<section id="letra">
+  <div class="note">
+    <h3><span class="es">Por qué 41,999,994.96 y no 42,000,000</span><span class="en">Why 41,999,994.96 and not 42,000,000</span></h3>
+    <p><span class="es">La recompensa se calcula en rupias enteras y cada halving la divide entre dos, descartando decimales. En la era 25 ya es de 1 rupia por bloque y en la 26 llega a cero. Esos redondeos suman 5.04 RUPIX menos que el techo teórico. La prueba <code>TestTotalSupply</code> del código suma cada era y da exactamente ese número.</span><span class="en">The reward is computed in whole rupias and each halving divides it by two, dropping decimals. In era 25 it is already 1 rupia per block, and in era 26 it reaches zero. Those roundings add up to 5.04 RUPIX below the theoretical cap. The code's <code>TestTotalSupply</code> test sums every era and gets exactly that number.</span></p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><span class="es">Fuentes en el código:</span><span class="en">Sources in the code:</span> <code>coinbasemanager.go</code> (<code>50,000,000 &gt;&gt; halvings</code>), <code>levels.go</code>, <code>params.go</code>, <code>util/txmass/calculator.go</code>.</div>
+    <div><span class="es">Todos los números se calculan en tu navegador con enteros exactos, igual que el nodo.</span><span class="en">All numbers are computed in your browser with exact integers, just like the node.</span> <a href="https://github.com/rupixnet/rupixd">github.com/rupixnet/rupixd</a> · <a href="/">rupix.network</a></div>
+    <div><span class="es"><b>No confíes, verifica.</b></span><span class="en"><b>Don't trust, verify.</b></span></div>
+  </div>
+</footer>
+
+<script>
+var LANG='es';
+function setLang(l){
+  LANG=l;
+  document.body.classList.toggle('lang-en', l==='en');
+  document.documentElement.lang = l;
+  document.getElementById('btn-es').classList.toggle('active', l==='es');
+  document.getElementById('btn-en').classList.toggle('active', l==='en');
+  try{localStorage.setItem('rupix-lang', l);}catch(e){}
+  if(window.rupixRedraw) window.rupixRedraw();
+}
+(function(){
+const SOMPI=100000000n, BASE=50000000n, MAIN=42000000n, TEST=100000n, YEAR_S=365.25*24*3600;
+const NAMES={es:["Gold","Diamante","Platino","Rodio","Kings"],en:["Gold","Diamond","Platinum","Rhodium","Kings"]};
+const CAPS=[null,2100000,210000,21000,2100], COST=[1,10,100,1000,10000], CLS=["r0","r1","r2","r3","r4"];
+const COLORS=["--gold-hi","--diamond","--platinum","--rhodium","--kings"];
+const T={
+ es:{year:"Año",block:"Bloque",era:"Era",reward:"Recompensa",rpb:"RUPIX por bloque",emitted:"Emitido",open:"Niveles abiertos",onlyGold:"solo Gold",years:"años desde el génesis",a:" a",cap:"techo: 41,999,994.96",hv:(h,y,b,n)=>`${h} · Halving ${h} (año ${y}, bloque ${b}M): abre ${n}`,hv2:(v,r)=>`${v} RUPIX emitidos · la recompensa baja a ${r}`,rewardRow:"recompensa por bloque (RUPIX)",eraGold:"Gold creado en la era",endTotal:"Total al terminar",blocks:"bloques",
+  th:["Era","Bloques","Recompensa / bloque","Gold en la era","Total acumulado","Termina (años)"],opens:"abre",
+  opensAt:"Se abre",genesis:"Desde el génesis",mined:"Se mina en cada bloque",recipe:"Receta",notForged:"Se mina, no se forja",burn:"Quema 10",totalGold:"Costo total en Gold",cap2:"Tope histórico",fill:"Gold para llenar el tope",goldCap:"42M (techo del Gold)",halving:"Halving",yrs:"años",testnet:"Testnet",
+  calcEra:"Era",calcRew:"Recompensa por bloque",calcEm:"Gold emitido hasta aquí",calcPct:"Del techo de 42M",next:"Próximo halving",noReward:"ya no hay recompensa",left:"faltan",levels:"Niveles",opened:"abierto",from:"desde",bad:"Escribe un número entero de bloque, por ejemplo 42000000.",min:"min",h:"h",days:"días",yearsW:"años",
+  presetsMain:[["Génesis","0"],["Halving 1","42000000"],["Halving 2","84000000"],["Halving 4","168000000"],["Era 26","1092000000"]],presetsTest:[["Diamante","100000"],["Platino","200000"],["Rodio","300000"],["Kings","400000"]],aria1:"Gold emitido acumulado: sube rápido al inicio y se acerca a 42 millones en unos 35 años",aria2:"Gold creado por era: 21 millones, luego 10.5, 5.25, siempre la mitad"},
+ en:{year:"Year",block:"Block",era:"Era",reward:"Reward",rpb:"RUPIX per block",emitted:"Issued",open:"Open levels",onlyGold:"Gold only",years:"years since genesis",a:" y",cap:"cap: 41,999,994.96",hv:(h,y,b,n)=>`${h} · Halving ${h} (year ${y}, block ${b}M): opens ${n}`,hv2:(v,r)=>`${v} RUPIX issued · reward drops to ${r}`,rewardRow:"reward per block (RUPIX)",eraGold:"Gold created in the era",endTotal:"Total at the end",blocks:"blocks",
+  th:["Era","Blocks","Reward / block","Gold in era","Cumulative","Ends (years)"],opens:"opens",
+  opensAt:"Opens",genesis:"From genesis",mined:"Mined in every block",recipe:"Recipe",notForged:"Mined, not forged",burn:"Burn 10",totalGold:"Total cost in Gold",cap2:"All-time cap",fill:"Gold to fill the cap",goldCap:"42M (Gold cap)",halving:"Halving",yrs:"years",testnet:"Testnet",
+  calcEra:"Era",calcRew:"Reward per block",calcEm:"Gold issued so far",calcPct:"Of the 42M cap",next:"Next halving",noReward:"no more reward",left:"remaining",levels:"Levels",opened:"open",from:"from",bad:"Enter a whole block number, e.g. 42000000.",min:"min",h:"h",days:"days",yearsW:"years",
+  presetsMain:[["Genesis","0"],["Halving 1","42000000"],["Halving 2","84000000"],["Halving 4","168000000"],["Era 26","1092000000"]],presetsTest:[["Diamond","100000"],["Platinum","200000"],["Rhodium","300000"],["Kings","400000"]],aria1:"Cumulative Gold issued: rises fast at first and approaches 42 million in about 35 years",aria2:"Gold created per era: 21 million, then 10.5, 5.25, always half"}
+};
+const t=()=>T[LANG], N=()=>NAMES[LANG];
+const fmt=(x,d=0)=>Number(x).toLocaleString("en-US",{minimumFractionDigits:d,maximumFractionDigits:d});
+const rupix=r=>{const i=r/SOMPI,f=(r%SOMPI).toString().padStart(8,"0").replace(/0+$/,"");return Number(i).toLocaleString("en-US")+(f?"."+f:"");};
+const rewardAt=e=>e>=64n?0n:(BASE>>e);
+function emittedAt(b,H){let tt=0n,e=0n,l=b;while(l>0n){const r=rewardAt(e);if(r===0n)break;const n=l<H?l:H;tt+=n*r;l-=n;e++;}return tt;}
+const ERAS=[];{let acc=0n;for(let e=0n;e<64n;e++){const r=rewardAt(e);if(r===0n)break;const g=r*MAIN;acc+=g;ERAS.push({e:Number(e),r,g,acc});}}
+const TOTAL=ERAS[ERAS.length-1].acc, eraYears=Number(MAIN)/YEAR_S;
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const NS="http://www.w3.org/2000/svg";
+const el=(tg,a={},p)=>{const e=document.createElementNS(NS,tg);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+function placeTip(tip,box,ev,w){const bx=box.getBoundingClientRect();let left=ev.clientX-bx.left+14;if(left+w>bx.width)left=ev.clientX-bx.left-w-14;tip.style.left=Math.max(0,left)+"px";tip.style.top="8px";}
+
+function drawTable(){
+  document.querySelector("#eraTable thead").innerHTML="<tr>"+t().th.map(h=>`<th>${h}</th>`).join("")+"</tr>";
+  const tb=document.querySelector("#eraTable tbody");tb.innerHTML="";
+  ERAS.forEach(x=>{const tr=document.createElement("tr");if(x.e>=1&&x.e<=4)tr.className="hl";const s=BigInt(x.e)*MAIN;
+    tr.innerHTML=`<td>${x.e+1}${x.e>=1&&x.e<=4?" · "+t().opens+" "+N()[x.e]:""}</td><td>${fmt(s)} – ${fmt(s+MAIN-1n)}</td><td>${rupix(x.r)}</td><td>${rupix(x.g)}</td><td>${rupix(x.acc)}</td><td>${((x.e+1)*eraYears).toFixed(1)}</td>`;tb.appendChild(tr);});
+}
+function drawSupply(){
+  const box=document.getElementById("supplyBox");box.innerHTML="";
+  const W=960,Hh=360,m={l:62,r:18,t:28,b:40},iw=W-m.l-m.r,ih=Hh-m.t-m.b,xmax=36,ymax=42e6;
+  const X=y=>m.l+y/xmax*iw,Y=v=>m.t+ih-v/ymax*ih;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${Hh}`,role:"img","aria-label":t().aria1},box);
+  const g=el("g",{class:"axis"},svg);
+  [0,10e6,20e6,30e6,42e6].forEach(v=>{el("line",{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),class:v===0?"baseline":"gridline"},g);el("text",{x:m.l-8,y:Y(v)+4,"text-anchor":"end"},g).textContent=v===0?"0":(v/1e6)+"M";});
+  [0,5,10,15,20,25,30,35].forEach(y=>{el("text",{x:X(y),y:Hh-m.b+18,"text-anchor":"middle"},g).textContent=y+(y?t().a:"");});
+  el("text",{x:W-m.r,y:Hh-4,"text-anchor":"end"},g).textContent=t().years;
+  const pts=[[0,0]];ERAS.forEach(x=>pts.push([(x.e+1)*eraYears,Number(x.acc)/1e8]));pts.push([xmax,Number(TOTAL)/1e8]);
+  const d=pts.map((p,i)=>(i?"L":"M")+X(p[0]).toFixed(1)+","+Y(p[1]).toFixed(1)).join("");
+  el("path",{d:d+`L${X(xmax)},${Y(0)}L${X(0)},${Y(0)}Z`,fill:css("--gold-soft")},svg);
+  el("path",{d,fill:"none",stroke:css("--gold-hi"),"stroke-width":2,"stroke-linejoin":"round"},svg);
+  el("line",{x1:m.l,x2:W-m.r,y1:Y(42e6),y2:Y(42e6),stroke:css("--muted"),"stroke-dasharray":"4 4"},svg);
+  for(let h=1;h<=4;h++){
+    const yr=h*eraYears,v=Number(ERAS[h-1].acc)/1e8,c=css(COLORS[h]);
+    el("line",{x1:X(yr),x2:X(yr),y1:Y(v),y2:Y(0),stroke:c,"stroke-width":1.5,"stroke-dasharray":"3 3"},svg);
+    el("circle",{cx:X(yr),cy:Y(v),r:5,fill:c,stroke:css("--bg-soft"),"stroke-width":2},svg);
+    el("text",{x:X(yr),y:Y(0)-6,"text-anchor":"middle",fill:css("--text"),"font-size":"11","font-weight":"600","font-family":"JetBrains Mono, monospace",stroke:css("--bg-soft"),"stroke-width":3,"paint-order":"stroke"},svg).textContent=h;
+    const lx=X(11),ly=Y(26e6)+(h-1)*38;
+    el("circle",{cx:lx,cy:ly-4,r:5,fill:c},svg);
+    el("text",{x:lx+12,y:ly,fill:css("--text"),"font-size":"13","font-family":"Inter, sans-serif","font-weight":"600"},svg).textContent=t().hv(h,yr.toFixed(1),fmt(h*42),N()[h]);
+    el("text",{x:lx+12,y:ly+15,fill:css("--muted"),"font-size":"11","font-family":"JetBrains Mono, monospace"},svg).textContent=t().hv2(fmt(v),rupix(rewardAt(BigInt(h))));
+  }
+  el("text",{x:X(xmax)-4,y:Y(42e6)-8,"text-anchor":"end",fill:css("--muted"),"font-size":"11","font-family":"JetBrains Mono, monospace"},svg).textContent=t().cap;
+  const cross=el("line",{y1:m.t,y2:m.t+ih,stroke:css("--muted"),opacity:0},svg);
+  const dot=el("circle",{r:5,fill:css("--gold-hi"),stroke:css("--bg-soft"),"stroke-width":2,opacity:0},svg);
+  const tip=document.createElement("div");tip.className="tip";tip.hidden=true;box.appendChild(tip);
+  const hit=el("rect",{x:m.l,y:m.t,width:iw,height:ih,fill:"transparent"},svg);
+  const move=ev=>{const r=svg.getBoundingClientRect(),sx=(ev.clientX-r.left)/r.width*W,yr=Math.max(0,Math.min(xmax,(sx-m.l)/iw*xmax));
+    const b=BigInt(Math.floor(yr*YEAR_S)),era=b/MAIN,em=emittedAt(b,MAIN),v=Number(em)/1e8;
+    cross.setAttribute("x1",X(yr));cross.setAttribute("x2",X(yr));cross.setAttribute("opacity",1);dot.setAttribute("cx",X(yr));dot.setAttribute("cy",Y(v));dot.setAttribute("opacity",1);
+    const open=[1,2,3,4].filter(l=>BigInt(l)*MAIN<=b).map(l=>N()[l]);
+    tip.innerHTML=`<div class="k">${t().year} ${yr.toFixed(1)} · ${t().block}</div><b>${fmt(b)}</b><div class="k">${t().era} ${Number(era)+1} · ${t().reward}</div><b>${rupix(rewardAt(era))} ${t().rpb}</b><div class="k">${t().emitted}</div><b>${rupix(em)} (${(v/42e6*100).toFixed(2)}%)</b><div class="k">${t().open}</div><b>${open.length?open.join(", "):t().onlyGold}</b>`;
+    tip.hidden=false;placeTip(tip,box,ev,210);};
+  hit.addEventListener("pointermove",move);hit.addEventListener("pointerdown",move);
+  hit.addEventListener("pointerleave",()=>{tip.hidden=true;cross.setAttribute("opacity",0);dot.setAttribute("opacity",0);});
+}
+function drawEras(){
+  const box=document.getElementById("eraBox");box.innerHTML="";
+  const W=960,Hh=280,m={l:62,r:18,t:22,b:48},iw=W-m.l-m.r,ih=Hh-m.t-m.b,n=10,bw=iw/n,gap=Math.max(6,bw*.28);
+  const Y=v=>m.t+ih-v/21e6*ih;
+  const svg=el("svg",{viewBox:`0 0 ${W} ${Hh}`,role:"img","aria-label":t().aria2},box);
+  const g=el("g",{class:"axis"},svg);
+  [0,5e6,10e6,15e6,21e6].forEach(v=>{el("line",{x1:m.l,x2:W-m.r,y1:Y(v),y2:Y(v),class:v===0?"baseline":"gridline"},g);el("text",{x:m.l-8,y:Y(v)+4,"text-anchor":"end"},g).textContent=v===0?"0":(v/1e6)+"M";});
+  const tip=document.createElement("div");tip.className="tip";tip.hidden=true;box.appendChild(tip);
+  ERAS.slice(0,n).forEach((x,i)=>{
+    const v=Number(x.g)/1e8,x0=m.l+i*bw+gap/2,w=bw-gap,y=Y(v),h=Math.max(1,m.t+ih-y),r=Math.min(4,w/2,h);
+    el("path",{d:`M${x0},${m.t+ih}V${y+r}Q${x0},${y} ${x0+r},${y}H${x0+w-r}Q${x0+w},${y} ${x0+w},${y+r}V${m.t+ih}Z`,fill:css("--gold-hi")},svg);
+    el("text",{x:x0+w/2,y:Hh-m.b+17,"text-anchor":"middle",class:"tick"},svg).textContent=t().era+" "+(i+1);
+    el("text",{x:x0+w/2,y:Hh-m.b+31,"text-anchor":"middle",class:"tick"},svg).textContent=rupix(x.r);
+    if(i<4)el("text",{x:x0+w/2,y:y-7,"text-anchor":"middle",fill:css("--text"),"font-size":"12","font-family":"JetBrains Mono, monospace"},svg).textContent=(v/1e6)+"M";
+    const hit=el("rect",{x:m.l+i*bw,y:m.t,width:bw,height:ih,fill:"transparent"},svg);
+    const show=ev=>{tip.innerHTML=`<div class="k">${t().era} ${i+1} · ${t().blocks} ${fmt(BigInt(i)*MAIN)} – ${fmt(BigInt(i+1)*MAIN-1n)}</div><b>${rupix(x.r)} ${t().rpb}</b><div class="k">${t().eraGold}</div><b>${rupix(x.g)} RUPIX</b><div class="k">${t().endTotal}</div><b>${rupix(x.acc)}</b>`;tip.hidden=false;placeTip(tip,box,ev,230);};
+    hit.addEventListener("pointermove",show);hit.addEventListener("pointerdown",show);hit.addEventListener("pointerleave",()=>tip.hidden=true);
+  });
+  el("text",{x:m.l+iw,y:Hh-2,"text-anchor":"end",class:"tick"},svg).textContent="↑ "+t().rewardRow;
+}
+function drawLadder(){
+  const L=document.getElementById("ladder");L.innerHTML="";
+  for(let i=0;i<5;i++){
+    const d=document.createElement("div");d.className="rung "+CLS[i];
+    const opens=i===0?t().genesis:`${t().block} ${fmt(BigInt(i)*MAIN)}`;
+    const when=i===0?t().mined:`${t().halving} ${i} · ~${(i*eraYears).toFixed(1)} ${t().yrs}`;
+    d.innerHTML=`<div class="name"><span class="dot"></span>${N()[i]}</div><dl>
+      <div><dt>${t().opensAt}</dt><dd>${opens}</dd><dd class="sub">${when}</dd></div>
+      <div><dt>${t().recipe}</dt><dd>${i===0?t().notForged:t().burn+" "+N()[i-1]}</dd></div>
+      <div><dt>${t().totalGold}</dt><dd>${fmt(COST[i])} Gold</dd></div>
+      <div><dt>${t().cap2}</dt><dd>${CAPS[i]?fmt(CAPS[i]):t().goldCap}</dd></div>
+      <div><dt>${t().fill}</dt><dd>${CAPS[i]?fmt(CAPS[i]*COST[i])+" Gold":"—"}</dd></div>
+      <div><dt>${t().testnet}</dt><dd>${i===0?"—":"DAA "+fmt(i*100000)}</dd></div></dl>`;
+    L.appendChild(d);
+  }
+  const C=document.getElementById("chain");C.innerHTML="";
+  [[4,"2,100"],[3,"21,000"],[2,"210,000"],[1,"2,100,000"],[0,"21,000,000"]].forEach((it,k,a)=>{
+    const s=document.createElement("span");s.className="pill "+CLS[it[0]];s.innerHTML=`<span class="dot"></span>${it[1]} ${N()[it[0]]}`;C.appendChild(s);
+    if(k<a.length-1){const e=document.createElement("span");e.className="arrow";e.textContent="←";C.appendChild(e);}
+  });
+}
+let H=MAIN;
+const inp=document.getElementById("blk"),out=document.getElementById("out"),err=document.getElementById("err"),bM=document.getElementById("netMain"),bT=document.getElementById("netTest"),pr=document.getElementById("presets");
+function presets(){pr.innerHTML="";(H===TEST?t().presetsTest:t().presetsMain).forEach(([n,v])=>{const b=document.createElement("button");b.type="button";b.textContent=n;b.onclick=()=>{inp.value=v;calc();};pr.appendChild(b);});}
+function setNet(test,keep){H=test?TEST:MAIN;bM.setAttribute("aria-pressed",!test);bT.setAttribute("aria-pressed",test);presets();if(!keep)inp.value=test?"200000":"42000000";calc();}
+function calc(){
+  const raw=inp.value.replace(/[,\s_]/g,"");
+  if(!/^\d{1,13}$/.test(raw)){err.textContent=t().bad;err.hidden=false;return;}
+  err.hidden=true;
+  const b=BigInt(raw),era=b/H,r=rewardAt(era),em=emittedAt(b,H),next=(era+1n)*H,left=next-b,s=Number(left);
+  const tt=s<3600?Math.max(1,Math.round(s/60))+" "+t().min:s<172800?Math.round(s/3600)+" "+t().h:s<63072000?fmt(Math.round(s/86400))+" "+t().days:(s/YEAR_S).toFixed(1)+" "+t().yearsW;
+  const lv=[0,1,2,3,4].map(l=>{const on=l===0||BigInt(l)*H<=b;return `<span class="lvl ${CLS[l]}${on?"":" off"}"><span class="dot"></span>${N()[l]} · ${on?t().opened:t().from+" "+fmt(BigInt(l)*H)}</span>`;}).join("");
+  const pct=Number(em*10000n/(42000000n*SOMPI))/100;
+  out.innerHTML=`<div><span class="k">${t().calcEra}</span><b>${fmt(era+1n)}</b></div><div><span class="k">${t().calcRew}</span><b>${rupix(r)} RUPIX</b></div><div><span class="k">${t().calcEm}</span><b>${rupix(em)}</b></div><div><span class="k">${t().calcPct}</span><b>${pct.toFixed(2)}%</b></div><div class="wide"><span class="k">${t().next}</span><b>${r===0n?t().noReward:t().block+" "+fmt(next)+" · "+t().left+" "+fmt(left)+" (~"+tt+")"}</b></div><div class="wide"><span class="k">${t().levels}</span><div class="levels">${lv}</div></div>`;
+}
+inp.addEventListener("input",calc);bM.onclick=()=>setNet(false);bT.onclick=()=>setNet(true);
+function redraw(){drawTable();drawSupply();drawEras();drawLadder();presets();calc();}
+window.rupixRedraw=redraw;
+let saved=null;try{saved=localStorage.getItem('rupix-lang');}catch(e){}
+if(saved==='en'||(!saved&&(navigator.language||'').slice(0,2)!=='es')){setLang('en');}else{redraw();}
+setNet(false,true);
+let rt;window.addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(()=>{drawSupply();drawEras();},150);});
+})();
+</script>
+</body>
+</html>
