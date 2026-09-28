@@ -13,7 +13,7 @@
     --bg:#0d0813; --bg-soft:#150e1f; --line:#2a2138; --grid:#1f1829;
     --text:#ece8f4; --muted:#a89fbd; --violet:#b794f6; --violet-deep:#6d28d9;
     --gold-hi:#e8c766; --gold:#d4af37; --gold-soft:rgba(232,199,102,.12);
-    --diamond:#b9e2f5; --platinum:#c9cdd4; --rhodium:#e39bb6; --kings:#b06ef7;
+    --diamond:#b9e2f5; --platinum:#c9cdd4; --rhodium:#8a8f98; --kings:#b06ef7;
     --mono:'JetBrains Mono',ui-monospace,Menlo,Consolas,monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -71,6 +71,7 @@
   details[open] summary{margin-bottom:10px}
   .ladder{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
   .rung{background:var(--bg-soft);border:1px solid var(--line);border-top:4px solid var(--c);border-radius:10px;padding:14px;display:grid;gap:10px;align-content:start}
+  .rung .gemimg{width:100%;max-width:120px;aspect-ratio:1;object-fit:cover;border-radius:9px;background:linear-gradient(160deg,#f4f1ec,#dcd8d2);border:1px solid var(--line)}
   .rung .name{display:flex;align-items:center;gap:8px;font:700 1.05rem/1.1 'Space Grotesk',sans-serif;color:var(--c)}
   .dot{width:11px;height:11px;border-radius:50%;background:var(--c);flex:none;display:inline-block}
   .rung dl{display:grid;gap:7px}
@@ -272,6 +273,7 @@ function setLang(l){
 const SOMPI=100000000n, BASE=50000000n, MAIN=42000000n, TEST=100000n, YEAR_S=365.25*24*3600;
 const NAMES={es:["Gold","Diamante","Platino","Rodio","Kings"],en:["Gold","Diamond","Platinum","Rhodium","Kings"]};
 const CAPS=[null,2100000,210000,21000,2100], COST=[1,10,100,1000,10000], CLS=["r0","r1","r2","r3","r4"];
+const IMGS=["oro.webp","diamante.jpg","platino.jpg","rodio.jpg","kings.jpg"];
 const COLORS=["--gold-hi","--diamond","--platinum","--rhodium","--kings"];
 const T={
  es:{year:"Año",block:"Bloque",era:"Era",reward:"Recompensa",rpb:"RUPIX por bloque",emitted:"Emitido",open:"Niveles abiertos",onlyGold:"solo Gold",years:"años desde el génesis",a:" a",cap:"techo: 41,999,994.96",hv:(h,y,b,n)=>`${h} · Halving ${h} (año ${y}, bloque ${b}M): abre ${n}`,hv2:(v,r)=>`${v} RUPIX emitidos · la recompensa baja a ${r}`,rewardRow:"recompensa por bloque (RUPIX)",eraGold:"Gold creado en la era",endTotal:"Total al terminar",blocks:"bloques",
@@ -367,7 +369,7 @@ function drawLadder(){
     const d=document.createElement("div");d.className="rung "+CLS[i];
     const opens=i===0?t().genesis:`${t().block} ${fmt(BigInt(i)*MAIN)}`;
     const when=i===0?t().mined:`${t().halving} ${i} · ~${(i*eraYears).toFixed(1)} ${t().yrs}`;
-    d.innerHTML=`<div class="name"><span class="dot"></span>${N()[i]}</div><dl>
+    d.innerHTML=`<img class="gemimg" src="${IMGS[i]}" alt="${N()[i]}" loading="lazy"><div class="name"><span class="dot"></span>${N()[i]}</div><dl>
       <div><dt>${t().opensAt}</dt><dd>${opens}</dd><dd class="sub">${when}</dd></div>
       <div><dt>${t().recipe}</dt><dd>${i===0?t().notForged:t().burn+" "+N()[i-1]}</dd></div>
       <div><dt>${t().totalGold}</dt><dd>${fmt(COST[i])} Gold</dd></div>
