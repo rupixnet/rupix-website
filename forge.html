@@ -83,11 +83,12 @@
 
   <h2>Step 4 — Forge your <span class="diamante">Diamond</span>!</h2>
   <p><strong>Before forging:</strong> each level opens at its halving. On testnet: Diamond at DAA 100,000, Platinum at 200,000, Rhodium at 300,000 and Kings at 400,000. Before that, the network rejects the forge. Check the DAA with <code>./rupixctl --testnet GetBlockDagInfo</code> (<code>virtualDaaScore</code> field).</p>
-  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=YOUR_ADDRESS --password=YOUR_PASSWORD</code></pre>
+  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=YOUR_ADDRESS
+Password: (type it here, it is not shown)</code></pre>
   <ul>
     <li><code>--level=1</code> → Diamond (first gem level)</li>
     <li><code>--gem-address=</code> → where the gem is born (step 3)</li>
-    <li><code>--password=</code> → your wallet password</li>
+    <li>The password is asked at that moment (since v0.6.1); it never goes in the command, so it never lands in your history</li>
   </ul>
   <p>This <strong>burns 10 Gold forever</strong> and creates <strong>1 Diamond</strong>.
      The burn is recorded on the blockchain, visible to everyone, irreversible.</p>

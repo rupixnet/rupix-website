@@ -85,11 +85,12 @@
 
   <h2>Paso 4 — ¡Forja tu <span class="diamante">Diamante</span>!</h2>
   <p><strong>Antes de forjar:</strong> cada nivel se abre en su halving. En la testnet: Diamante en el DAA 100,000, Platino en 200,000, Rodio en 300,000 y Kings en 400,000. Antes de eso la red rechaza la forja. Revisa el DAA con <code>./rupixctl --testnet GetBlockDagInfo</code> (campo <code>virtualDaaScore</code>). <code>--level</code>: 1 = Diamante, 2 = Platino, 3 = Rodio, 4 = Kings.</p>
-  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=TU_DIRECCION --password=TU_CLAVE</code></pre>
+  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=TU_DIRECCION
+Password: (la escribes aquí, no se ve)</code></pre>
   <ul>
     <li><code>--level=1</code> → Diamante (primer nivel)</li>
     <li><code>--gem-address=</code> → dónde nace la gema (paso 3)</li>
-    <li><code>--password=</code> → la contraseña de tu wallet</li>
+    <li>La contraseña se pide al momento (desde v0.6.1); nunca va en el comando, así no queda en el historial</li>
   </ul>
   <p>Esto <strong>quema 10 Gold para siempre</strong> y crea <strong>1 Diamante</strong>.
      La quema queda grabada en la blockchain, visible para todos, irreversible.</p>
