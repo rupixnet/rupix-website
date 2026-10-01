@@ -83,12 +83,14 @@
 
   <h2>Step 4 — Forge your <span class="diamante">Diamond</span>!</h2>
   <p><strong>Before forging:</strong> each level opens at its halving. On testnet: Diamond at DAA 100,000, Platinum at 200,000, Rhodium at 300,000 and Kings at 400,000. Before that, the network rejects the forge. Check the DAA with <code>./rupixctl --testnet GetBlockDagInfo</code> (<code>virtualDaaScore</code> field).</p>
-  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=YOUR_ADDRESS
+  <pre><code>./rupixwallet --testnet forge --level=1
 Password: (type it here, it is not shown)</code></pre>
+  <p><strong>Since v0.6.2 the wallet checks before sending:</strong> it asks your node, verifies the level is open and that you hold the Gold (or gems) the ladder requires, and shows a summary —what burns, what is born, to which address, what fee— that you confirm by typing <code>yes</code>. If something is missing it tells you in words (for example: "Platinum opens at block 200,000 and the network is at 196,790: 3,210 blocks to go (~53 min)") instead of a node error.</p>
   <ul>
     <li><code>--level=1</code> → Diamond (first gem level)</li>
-    <li><code>--gem-address=</code> → where the gem is born (step 3)</li>
+    <li><code>--gem-address=</code> is optional: leave it out and the gem is born at your own address (step 3)</li>
     <li>The password is asked at that moment (since v0.6.1); it never goes in the command, so it never lands in your history</li>
+    <li>Wallet in Spanish? <code>./rupixwallet language es</code> (or <code>--lang=es</code> on any command)</li>
   </ul>
   <p>This <strong>burns 10 Gold forever</strong> and creates <strong>1 Diamond</strong>.
      The burn is recorded on the blockchain, visible to everyone, irreversible.</p>

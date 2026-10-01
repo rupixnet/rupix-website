@@ -85,12 +85,14 @@
 
   <h2>Paso 4 — ¡Forja tu <span class="diamante">Diamante</span>!</h2>
   <p><strong>Antes de forjar:</strong> cada nivel se abre en su halving. En la testnet: Diamante en el DAA 100,000, Platino en 200,000, Rodio en 300,000 y Kings en 400,000. Antes de eso la red rechaza la forja. Revisa el DAA con <code>./rupixctl --testnet GetBlockDagInfo</code> (campo <code>virtualDaaScore</code>). <code>--level</code>: 1 = Diamante, 2 = Platino, 3 = Rodio, 4 = Kings.</p>
-  <pre><code>./rupixwallet --testnet forge --level=1 --gem-address=TU_DIRECCION
+  <pre><code>./rupixwallet --testnet forge --level=1
 Password: (la escribes aquí, no se ve)</code></pre>
+  <p><strong>Desde v0.6.2 la wallet revisa antes de mandar:</strong> consulta tu nodo, comprueba que el nivel esté abierto y que tengas el Gold (o las gemas) que pide la escalera, y te muestra un resumen —qué se quema, qué nace, a qué dirección, cuánta comisión— que tienes que confirmar escribiendo <code>si</code>. Si algo falta, te lo dice en palabras (por ejemplo: "el Platino se abre en el bloque 200,000 y la red va en el 196,790: faltan 3,210 bloques (~53 min)") en vez de un error del nodo.</p>
   <ul>
     <li><code>--level=1</code> → Diamante (primer nivel)</li>
-    <li><code>--gem-address=</code> → dónde nace la gema (paso 3)</li>
+    <li><code>--gem-address=</code> es opcional: si no lo pones, la gema nace en tu propia dirección (paso 3)</li>
     <li>La contraseña se pide al momento (desde v0.6.1); nunca va en el comando, así no queda en el historial</li>
+    <li>¿Prefieres la wallet en inglés? <code>./rupixwallet language en</code> (o <code>--lang=en</code> en cualquier comando)</li>
   </ul>
   <p>Esto <strong>quema 10 Gold para siempre</strong> y crea <strong>1 Diamante</strong>.
      La quema queda grabada en la blockchain, visible para todos, irreversible.</p>

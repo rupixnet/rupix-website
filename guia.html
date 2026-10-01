@@ -75,9 +75,9 @@
      <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a> (siempre la última versión — no uses versiones anteriores)</p>
   <p>Descarga el archivo de tu sistema:</p>
   <ul>
-    <li><strong>Windows:</strong> <code>rupix-v0.6.1-win64.zip</code></li>
-    <li><strong>Mac:</strong> <code>rupix-v0.6.1-osx.zip</code></li>
-    <li><strong>Linux:</strong> <code>rupix-v0.6.1-linux.zip</code></li>
+    <li><strong>Windows:</strong> <code>rupix-v0.6.2-win64.zip</code></li>
+    <li><strong>Mac:</strong> <code>rupix-v0.6.2-osx.zip</code></li>
+    <li><strong>Linux:</strong> <code>rupix-v0.6.2-linux.zip</code></li>
   </ul>
   <p>Descomprime el archivo. Dentro hay 4 programas: <code>rupixd</code> (el nodo),
      <code>rupixctl</code> (control), <code>rupixwallet</code> (billetera),
@@ -112,7 +112,7 @@
   </div>
   <p>Crea tu wallet (una sola vez):</p>
   <pre><code>./rupixwallet --testnet create</code></pre>
-  <p><strong>Te muestra tu frase semilla una sola vez</strong> (desde v0.6.1): anótala en papel, en orden, y limpia la pantalla (<code>clear</code> / <code>cls</code>). Con esa frase recuperas la wallet si pierdes el archivo o la contraseña; sin ella, no hay forma. No la guardes en el teléfono ni la mandes por chat.</p>
+  <p><strong>Te muestra tu frase semilla una sola vez</strong> (desde v0.6.1): anótala en papel, en orden, y limpia la pantalla (<code>clear</code> / <code>cls</code>). Con esa frase recuperas la wallet si pierdes el archivo o la contraseña; sin ella, no hay forma. No la guardes en el teléfono ni la mandes por chat. <strong>Desde v0.6.2 la wallet te pide dos palabras al azar de la frase</strong> antes de terminar, para comprobar que la anotaste bien; no se puede saltar. Y si prefieres la wallet en inglés: <code>./rupixwallet language en</code>.</p>
   <p>Arranca el daemon y déjalo corriendo en su propia ventana:</p>
   <pre><code>./rupixwallet --testnet start-daemon</code></pre>
   <p>En <strong>otra</strong> ventana, crea tu dirección:</p>
