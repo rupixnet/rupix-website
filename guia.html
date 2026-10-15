@@ -86,9 +86,10 @@
   <h2>Paso 2 — Arranca tu nodo y conéctate</h2>
   <p>Abre una terminal en la carpeta donde descomprimiste Rupix, y corre:</p>
   <p><strong>Linux / Mac:</strong></p>
-  <pre><code>./rupixd --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <pre><code>./rupixd --testnet --utxoindex --addpeer=178.104.69.148:17211 --uacomment=TuNombre</code></pre>
   <p><strong>Windows:</strong></p>
-  <pre><code>.\rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211</code></pre>
+  <pre><code>.\rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211 --uacomment=TuNombre</code></pre>
+  <p><strong>Tu luz en el mapa.</strong> <code>--uacomment=TuNombre</code> es el nombre con el que tu nodo aparece en el <a href="https://explorer.rupix.network/mapa.html">mapa de nodos</a> (cámbialo por el tuyo; sin espacios). Viaja en el saludo de la red y nada más. El mapa muestra país y ciudad aproximados; <strong>nunca tu IP</strong>. Si no quieres nombre, quita esa parte y apareces como "nodo".</p>
   <p>Tu nodo se conectará al nodo semilla y empezará a <strong>sincronizar</strong>.
      Verás muchos mensajes — es normal. Cuando alcance el bloque más reciente, ¡ya estás en la red! 🎉</p>
 
