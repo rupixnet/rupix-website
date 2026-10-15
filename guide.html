@@ -90,8 +90,6 @@
   <p><strong>Windows:</strong></p>
   <pre><code>.\rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211 --uacomment=YourName</code></pre>
   <p><strong>Your light on the map.</strong> <code>--uacomment=YourName</code> is the name your node shows on the <a href="https://explorer.rupix.network/mapa.html">node map</a> (replace it with yours; no spaces). It travels in the network handshake and nothing else. The map shows approximate country and city; <strong>never your IP</strong>. If you want no name, drop that part and you show up as "node".</p>
-  <p>Example: if your name is Edu, the full command on Windows is</p>
-  <pre><code>.\rupixd.exe --testnet --utxoindex --addpeer=178.104.69.148:17211 --uacomment=Edu</code></pre>
   <p>There is no separate command for the name: it is part of the command that starts the node. To change it later, stop the node (Ctrl+C) and start it again with the new name.</p>
   <p>Your node will connect to the seed node and start <strong>syncing</strong>.
      You'll see lots of messages — that's normal. When it catches up with the latest block, you're on the network! 🎉</p>
