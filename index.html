@@ -274,6 +274,19 @@
     .rung .bar{transition:none}
     html{scroll-behavior:auto}
   }
+  /* Estado en vivo (17-oct-2026): lo que dice el nodo, nada mas */
+  .vivo{margin-top:18px;background:#150e1f;border:1px solid #3a2d55;border-radius:14px;padding:14px 16px}
+  .vivo-cab{display:flex;align-items:center;gap:10px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#a89fbd;margin-bottom:10px}
+  .vivo-cab .punto{width:10px;height:10px;border-radius:50%;background:#7dd88f;box-shadow:0 0 0 0 rgba(125,216,143,.6);animation:vivo-latir 2s ease-out infinite}
+  .vivo-cab .punto.tarde{background:#e8c766;animation:none}
+  .vivo-cab .punto.sin{background:#8a7fa0;animation:none}
+  @keyframes vivo-latir{0%{box-shadow:0 0 0 0 rgba(125,216,143,.6)}70%{box-shadow:0 0 0 9px rgba(125,216,143,0)}100%{box-shadow:0 0 0 0 rgba(125,216,143,0)}}
+  .vivo-datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 18px}
+  .vivo-datos b{display:block;font-size:1.25rem;color:#e8c766;line-height:1.15}
+  .vivo-datos b.v{color:#b794f6}
+  .vivo-datos span.l{display:block;font-size:.78rem;color:#a89fbd;margin-top:2px}
+  .vivo-pie{margin-top:10px;font-size:.78rem;color:#a89fbd}
+  .vivo-pie a{color:#b794f6}
 </style>
 </head>
 <body>
@@ -322,6 +335,17 @@
           <span style="font-size:1.4rem;filter:drop-shadow(0 0 8px rgba(232,199,102,.5))" aria-hidden="true">🌍</span>
           <span><span class="es">Rupix en vivo</span><span class="en">Rupix, live</span><br><span style="font-size:.78rem;color:#a89fbd;font-weight:400"><span class="es">La red encendida · cada luz es un nodo real</span><span class="en">The network, lit · every light is a real node</span></span></span>
         </a>
+        </div>
+        <div class="vivo" id="vivo">
+          <div class="vivo-cab"><span class="punto sin" id="vivo-punto"></span><span class="es">Estado en vivo · testnet #4</span><span class="en">Live status · testnet #4</span><span id="vivo-version" style="margin-left:auto;text-transform:none;letter-spacing:0"></span></div>
+          <div class="vivo-datos" id="vivo-datos">
+            <div><b id="v-hace">…</b><span class="l"><span class="es">último bloque</span><span class="en">last block</span></span></div>
+            <div><b id="v-daa">…</b><span class="l"><span class="es">bloque (DAA)</span><span class="en">block (DAA)</span></span></div>
+            <div><b id="v-dias">…</b><span class="l"><span class="es">días desde el 25-sep-2026</span><span class="en">days since Sep 25, 2026</span></span></div>
+            <div><b class="v" id="v-nodos">…</b><span class="l"><span class="es">nodos encendidos ahora</span><span class="en">nodes lit right now</span></span></div>
+            <div><b id="v-gemas">…</b><span class="l"><span class="es">gemas creadas 💎 · Platino · Rodio · King</span><span class="en">gems created 💎 · Platinum · Rhodium · King</span></span></div>
+          </div>
+          <div class="vivo-pie" id="vivo-pie"><span class="es">Leído del nodo semilla cada 15 s. Verifícalo tú: <a href="https://explorer.rupix.network/api/estado" rel="noopener">el JSON crudo</a>.</span><span class="en">Read from the seed node every 15 s. Verify it yourself: <a href="https://explorer.rupix.network/api/estado" rel="noopener">the raw JSON</a>.</span></div>
         </div>
         <ul class="hero-links">
           <li><a class="es" href="/guia.html">✓ Guía: cómo conectar tu nodo a la testnet →</a><a class="en" href="/guide.html">✓ Guide: how to connect your node to the testnet →</a></li>
@@ -742,6 +766,41 @@
     },{threshold:.35});
     io.observe(ladder);
   })();
+</script>
+<script>
+// Estado en vivo: se lee /api/estado del explorador; si no contesta, se dice. Nunca se inventa un numero.
+(function(){
+  var E=null, visto=0;
+  var $=function(id){return document.getElementById(id)};
+  var es=function(){return !document.body.classList.contains("lang-en")};
+  function fmt(n){return Number(n).toLocaleString(es()?"es-MX":"en-US")}
+  function pintar(){
+    if(!E) return;
+    var punto=$("vivo-punto");
+    if(E.error||!E.ultimoBloque){
+      punto.className="punto sin";
+      $("v-hace").textContent=es()?"sin datos":"no data";
+    }else{
+      var hace=Math.max(0,Math.round(Date.now()/1000-E.ultimoBloque));
+      $("v-hace").textContent=(es()?"hace ":"")+(hace<90?hace+" s":Math.round(hace/60)+" min")+(es()?"":" ago");
+      punto.className="punto"+(hace>120?" tarde":"");
+    }
+    $("v-daa").textContent=E.daa?fmt(E.daa):"—";
+    $("v-dias").textContent=E.diasTestnet!=null?E.diasTestnet:"—";
+    $("v-nodos").textContent=E.nodosAhora!=null?E.nodosAhora+(E.paises>1?" · "+E.paises+(es()?" países":" countries"):""):"—";
+    $("v-gemas").textContent=E.daa?[E.diamantes,E.platinos,E.rodios,E.kings].map(fmt).join(" · "):"—";
+    $("vivo-version").textContent=E.version?"v"+E.version+(E.sincronizado?"":(es()?" · sincronizando":" · syncing")):"";
+    if(E.error){ $("vivo-pie").innerHTML=es()?"El explorador contestó pero el nodo no: <code>"+String(E.error).replace(/[<>&]/g,"")+"</code>. Lo decimos tal cual.":"The explorer answered but the node did not: <code>"+String(E.error).replace(/[<>&]/g,"")+"</code>. We say it as it is."; }
+  }
+  function cargar(){
+    fetch("https://explorer.rupix.network/api/estado",{cache:"no-store"}).then(function(r){return r.json()}).then(function(j){E=j;visto=Date.now();pintar();}).catch(function(){
+      E={error:es()?"el explorador no responde en este momento":"the explorer is not responding right now"}; pintar();
+      $("vivo-pie").textContent=es()?"El explorador no responde en este momento. No mostramos números que no podamos leer.":"The explorer is not responding right now. We show no numbers we cannot read.";
+    });
+  }
+  cargar(); setInterval(cargar,15000); setInterval(pintar,1000);
+  document.addEventListener("click",function(){setTimeout(pintar,50)});
+})();
 </script>
 </body>
 </html>
