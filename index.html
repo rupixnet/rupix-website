@@ -290,8 +290,10 @@
   .vivo-cab .punto.tarde{background:#e8c766;animation:none}
   .vivo-cab .punto.sin{background:#8a7fa0;animation:none}
   @keyframes vivo-latir{0%{box-shadow:0 0 0 0 rgba(125,216,143,.6)}70%{box-shadow:0 0 0 9px rgba(125,216,143,0)}100%{box-shadow:0 0 0 0 rgba(125,216,143,0)}}
-  .vivo-datos{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px 18px}
-  .vivo-datos b{display:block;font-size:1.25rem;color:#e8c766;line-height:1.15}
+  .vivo-datos{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 18px}
+  @media(max-width:640px){.vivo-datos{grid-template-columns:1fr 1fr}}
+  .vivo-datos b{display:block;font-size:1.7rem;font-weight:800;color:#e8c766;line-height:1.1;font-variant-numeric:tabular-nums}
+  .vivo-datos .l2{color:#7dd88f;font-size:.76rem}
   .vivo-datos b.v{color:#b794f6}
   .vivo-datos span.l{display:block;font-size:.78rem;color:#a89fbd;margin-top:2px}
   .vivo-pie{margin-top:10px;font-size:.78rem;color:#a89fbd}
@@ -353,13 +355,12 @@
         </a>
         </div>
         <div class="vivo" id="vivo">
-          <div class="vivo-cab"><span class="punto sin" id="vivo-punto"></span><span class="es">Estado en vivo · testnet #4</span><span class="en">Live status · testnet #4</span><span id="vivo-version" style="margin-left:auto;text-transform:none;letter-spacing:0"></span></div>
+          <div class="vivo-cab"><span class="punto sin" id="vivo-punto"></span><span class="es">Rupix en vivo · testnet #4</span><span class="en">Rupix, live · testnet #4</span><span id="vivo-version" style="margin-left:auto;text-transform:none;letter-spacing:0"></span></div>
           <div class="vivo-datos" id="vivo-datos">
-            <div><b id="v-hace">…</b><span class="l"><span class="es">último bloque</span><span class="en">last block</span></span></div>
-            <div><b id="v-daa">…</b><span class="l"><span class="es">bloque (DAA)</span><span class="en">block (DAA)</span></span></div>
-            <div><b id="v-dias">…</b><span class="l"><span class="es">días desde el 25-sep-2026</span><span class="en">days since Sep 25, 2026</span></span></div>
-            <div><b class="v" id="v-nodos">…</b><span class="l"><span class="es">nodos encendidos ahora</span><span class="en">nodes lit right now</span></span></div>
-            <div><b id="v-gemas">…</b><span class="l"><span class="es">gemas creadas 💎 · Platino · Rodio · King</span><span class="en">gems created 💎 · Platinum · Rhodium · King</span></span></div>
+            <div><b id="v-dias">…</b><span class="l"><span class="es">días viviendo la testnet</span><span class="en">days the testnet has lived</span></span></div>
+            <div><b class="v" id="v-nodos">…</b><span class="l"><span class="es">nodos han sostenido Rupix</span><span class="en">nodes have held Rupix up</span><br><span class="l2" id="v-ahora"></span></span></div>
+            <div><b id="v-paises">…</b><span class="l"><span class="es">países</span><span class="en">countries</span></span></div>
+            <div><b id="v-hace">…</b><span class="l"><span class="es">el último bloque · la prueba de vida</span><span class="en">the last block · proof of life</span></span></div>
           </div>
           <div class="vivo-pie" id="vivo-pie"><span class="es">Leído del nodo semilla cada 15 s. Verifícalo tú: <a href="https://explorer.rupix.network/api/estado" rel="noopener">el JSON crudo</a>.</span><span class="en">Read from the seed node every 15 s. Verify it yourself: <a href="https://explorer.rupix.network/api/estado" rel="noopener">the raw JSON</a>.</span></div>
         </div>
@@ -801,11 +802,11 @@
       $("v-hace").textContent=(es()?"hace ":"")+(hace<90?hace+" s":Math.round(hace/60)+" min")+(es()?"":" ago");
       punto.className="punto"+(hace>120?" tarde":"");
     }
-    $("v-daa").textContent=E.daa?fmt(E.daa):"—";
     $("v-dias").textContent=E.diasTestnet!=null?E.diasTestnet:"—";
-    $("v-nodos").textContent=E.nodosAhora!=null?E.nodosAhora+(E.paises>1?" · "+E.paises+(es()?" países":" countries"):""):"—";
-    $("v-gemas").textContent=E.daa?[E.diamantes,E.platinos,E.rodios,E.kings].map(fmt).join(" · "):"—";
-    $("vivo-version").textContent=E.version?"v"+E.version+(E.sincronizado?"":(es()?" · sincronizando":" · syncing")):"";
+    $("v-nodos").textContent=E.nodosHistoria!=null?E.nodosHistoria:"—";
+    $("v-ahora").textContent=E.nodosAhora!=null?(E.nodosAhora+(es()?(E.nodosAhora===1?" encendido ahora":" encendidos ahora"):(" lit right now"))):"";
+    $("v-paises").textContent=E.paises!=null?E.paises:"—";
+    $("vivo-version").textContent=E.version?"v"+E.version:"";
     if(E.error){ $("vivo-pie").innerHTML=es()?"El explorador contestó pero el nodo no: <code>"+String(E.error).replace(/[<>&]/g,"")+"</code>. Lo decimos tal cual.":"The explorer answered but the node did not: <code>"+String(E.error).replace(/[<>&]/g,"")+"</code>. We say it as it is."; }
   }
   function cargar(){
