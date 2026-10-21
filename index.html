@@ -73,9 +73,11 @@
   }
   .lang-toggle button.active{background:var(--violet-deep);color:#fff}
   /* Menu principal (20-oct-2026, pedido de JC): las guias a la vista, arriba, antes del ES/EN */
-  .menu{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;flex:1;margin:0 16px}
-  .menu .es,body.lang-en .menu .en{display:inline-flex}
-  .menu a{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;line-height:1;height:34px;border:1px solid var(--line);border-radius:999px;color:var(--text);text-decoration:none;font-size:.85rem;font-weight:600;white-space:nowrap;background:rgba(255,255,255,.02)}
+  header .wrap{max-width:1180px}
+  .menu{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;flex:1;margin:0 10px}
+  .menu a.en,body.lang-en .menu a.es{display:none}
+  body.lang-en .menu a.en{display:inline-flex}
+  .menu a{display:inline-flex;align-items:center;gap:5px;padding:6px 10px;line-height:1;height:32px;border:1px solid var(--line);border-radius:999px;color:var(--text);text-decoration:none;font-size:.78rem;font-weight:600;white-space:nowrap;background:rgba(255,255,255,.02)}
   .menu a:hover{border-color:var(--gold-hi);color:var(--gold-hi)}
   .menu a.expl{border-color:#3a2d55;background:linear-gradient(135deg,#1b1230,#150e1f)}
   @media(max-width:720px){.nav{flex-wrap:wrap;gap:10px}.menu{order:3;flex-basis:100%;margin:0;justify-content:flex-start;overflow-x:auto;flex-wrap:nowrap;padding-bottom:2px}}
@@ -302,10 +304,11 @@
   <div class="wrap nav">
     <div class="brand"><span class="gem" aria-hidden="true"></span>RUPIX</div>
     <nav class="menu" aria-label="Guías">
-      <a class="es" href="/guia.html">🔌 Conectar tu nodo</a><a class="en" href="/guide.html">🔌 Connect your node</a>
-      <a class="es" href="/forja.html">💎 Forjar una gema</a><a class="en" href="/forge.html">💎 Forge a gem</a>
+      <a class="es" href="/guia.html">🔌 Guía: cómo conectar tu nodo</a><a class="en" href="/guide.html">🔌 Guide: connect your node</a>
+      <a class="es" href="/forja.html">💎 Guía: forjar una gema</a><a class="en" href="/forge.html">💎 Guide: forge a gem</a>
       <a class="es" href="/matematica.html">∑ La matemática</a><a class="en" href="/matematica.html">∑ The math</a>
-      <a class="expl es" href="https://explorer.rupix.network" rel="noopener">🌍 Explorador</a><a class="expl en" href="https://explorer.rupix.network" rel="noopener">🌍 Explorer</a>
+      <a class="expl es" href="https://explorer.rupix.network" rel="noopener">◆ Explorador</a><a class="expl en" href="https://explorer.rupix.network" rel="noopener">◆ Explorer</a>
+      <a class="expl es" href="https://explorer.rupix.network/mapa.html" rel="noopener">🌍 Rupix en vivo</a><a class="expl en" href="https://explorer.rupix.network/mapa.html" rel="noopener">🌍 Rupix, live</a>
     </nav>
     <div class="lang-toggle" role="group" aria-label="Idioma / Language">
       <button id="btn-es" class="active" onclick="setLang('es')">ES</button>
