@@ -75,13 +75,11 @@
   <pre><code>curl -sSL https://rupix.network/instalar.sh | sh</code></pre>
   <p>It is plain text: <a href="/instalar.sh">read it before running it</a>. Its sha256: <code style="word-break:break-all">9f537d3ae1ae418bf0b35fae5fe39a8de98c8fc8f21e94ae7806fcd0dcef6f43</code>. It checks the binaries against the list every release publishes and <strong>if one does not match, it installs nothing</strong>. On Linux with systemd it leaves the node as a service (starts on reboot); on Mac it prints the command to start it. Before touching anything it shows the plan and waits for your "si"; if the machine already has a node it <strong>refuses</strong> (to update only the binaries: <code>--actualizar</code>). Options: <code>--nombre=YourName</code>, <code>--sin-servicio</code>, <code>--si</code>. On Windows, continue with step 1.</p>
   <h2>Step 1 — Download Rupix</h2>
-  <p>Go to the official downloads:
-     <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a> (always the latest version — don't use older ones)</p>
-  <p>Download the file for your system:</p>
+  <p>Direct download for your system (current version, v0.6.6). To see everything published, the official list is at <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a>; don't use older versions.</p>
   <ul>
-    <li><strong>Windows:</strong> <code>rupix-v0.6.6-win64.zip</code></li>
-    <li><strong>Mac:</strong> <code>rupix-v0.6.6-osx.zip</code></li>
-    <li><strong>Linux:</strong> <code>rupix-v0.6.6-linux.zip</code></li>
+    <li><strong>Windows:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.6/rupix-v0.6.6-win64.zip"><code>rupix-v0.6.6-win64.zip</code></a> ⬇</li>
+    <li><strong>Mac:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.6/rupix-v0.6.6-osx.zip"><code>rupix-v0.6.6-osx.zip</code></a> ⬇</li>
+    <li><strong>Linux:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.6/rupix-v0.6.6-linux.zip"><code>rupix-v0.6.6-linux.zip</code></a> ⬇</li>
   </ul>
   <p>Unzip it. Inside there are 4 programs: <code>rupixd</code> (the node),
      <code>rupixctl</code> (control), <code>rupixwallet</code> (wallet),
