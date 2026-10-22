@@ -73,13 +73,13 @@
   <h2>Step 0 — One command (Linux and Mac)</h2>
   <p>Everything below (download, sha256 check, install, name your node and keep it running) is done by a script in a minute:</p>
   <pre><code>curl -sSL https://rupix.network/instalar.sh | sh</code></pre>
-  <p>It is plain text: <a href="/instalar.sh">read it before running it</a>. Its sha256: <code style="word-break:break-all">5cbbc5c406a9c5e49d0e7dff8ed56ad730fdefcc6f98ad8cfb924e846ee6ff82</code>. It checks the binaries against the list every release publishes and <strong>if one does not match, it installs nothing</strong>. On Linux with systemd it leaves the node as a service (starts on reboot); on Mac it prints the command to start it. Before touching anything it shows the plan and waits for your "si"; if the machine already has a node it <strong>refuses</strong> (to update only the binaries: <code>--actualizar</code>). Options: <code>--nombre=YourName</code>, <code>--sin-servicio</code>, <code>--si</code>. On Windows, continue with step 1.</p>
+  <p>It is plain text: <a href="/instalar.sh">read it before running it</a>. Its sha256: <code style="word-break:break-all">2f391ecde093bc62cb333fb5808d5418548a5951d93b211e08770c1336f51c22</code>. It checks the binaries against the list every release publishes and <strong>if one does not match, it installs nothing</strong>. On Linux with systemd it leaves the node as a service (starts on reboot); on Mac it prints the command to start it. Before touching anything it shows the plan and waits for your "si"; if the machine already has a node it <strong>refuses</strong> (to update only the binaries: <code>--actualizar</code>). Options: <code>--nombre=YourName</code>, <code>--sin-servicio</code>, <code>--si</code>. On Windows, continue with step 1.</p>
   <h2>Step 1 — Download Rupix</h2>
-  <p>Direct download for your system (current version, v0.6.7). To see everything published, the official list is at <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a>; don't use older versions.</p>
+  <p>Direct download for your system (current version, v0.6.8). To see everything published, the official list is at <a href="https://github.com/rupixnet/rupixd/releases/latest">github.com/rupixnet/rupixd/releases/latest</a>; don't use older versions.</p>
   <ul>
-    <li><strong>Windows:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.7/rupix-v0.6.7-win64.zip"><code>rupix-v0.6.7-win64.zip</code></a> ⬇</li>
-    <li><strong>Mac:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.7/rupix-v0.6.7-osx.zip"><code>rupix-v0.6.7-osx.zip</code></a> ⬇</li>
-    <li><strong>Linux:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.7/rupix-v0.6.7-linux.zip"><code>rupix-v0.6.7-linux.zip</code></a> ⬇</li>
+    <li><strong>Windows:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.8/rupix-v0.6.8-win64.zip"><code>rupix-v0.6.8-win64.zip</code></a> ⬇</li>
+    <li><strong>Mac:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.8/rupix-v0.6.8-osx.zip"><code>rupix-v0.6.8-osx.zip</code></a> ⬇</li>
+    <li><strong>Linux:</strong> <a href="https://github.com/rupixnet/rupixd/releases/download/v0.6.8/rupix-v0.6.8-linux.zip"><code>rupix-v0.6.8-linux.zip</code></a> ⬇</li>
   </ul>
   <p>Unzip it. Inside there are 4 programs: <code>rupixd</code> (the node),
      <code>rupixctl</code> (control), <code>rupixwallet</code> (wallet),
